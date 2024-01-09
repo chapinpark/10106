@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Alegreya:wght@400;700&ital,wght@0,1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@400;700&ital,wght@0,1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alegreya+SC:wght@400;700&ital,wght@0,1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@400;700&ital,wght@0,1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
+  @import url("https://use.typekit.net/ubt1odf.css");
+
+
+:root {
+    --standard-box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    --color1: #fe938c;
+    --color2: #4281a4;
+    --color3: #fdd692;
+    --color4: #9cafb7;
+    --color5: #e6b89c;
+    --container-background: #ffffff;
+  --font-primary: 'calluna-sans', sans-serif;
+  --font-secondary: 'Alegreya', serif;
+  --font-small-caps: 'Alegreya SC', serif;
+  --font-sans-small-caps: 'Alegreya Sans SC', sans-serif;
+  --font-display: 'Sacramento', cursive;
+  --font-mono: 'Courier Prime', sans;
+}
+
+body{
+  font-family: var(--font-primary);
+  font-weight: 500;
+  font-size: 20px;
+}
+
+h1{
+  color: var(--color2);
+  font-family: var(--font-display);
+  font-size: 60px;
+}
+
+h2{
+  color: var(--color4);
+  font-family: var(--font-secondary);
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--container-background);
+  min-height: 100vh;
+}
+
+
+
+.top-menu-container {
+    background-color: var(--color1); /* Navy blue background */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px; /* Adjust padding as needed */
+  position:fixed;
+  z-index: 10;
+}
+
+.top-menu-container button {
+  color: white; /* White text color */
+  background-color: inherit; /* Inherits navy blue from nav-bar */
+  border: none; /* No border */
+  padding: 10px 20px; /* Adjust padding as needed */
+  text-decoration: none; /* Removes underline from links if used */
+  border-radius: 50px; /* Elliptical shape */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition for color and background */
+  font-family: var(--font-small-caps);
+  font-variant: small-caps;
+  font-size: 1.2rem;
+}
+
+
+.top-menu-container button:hover, .top-menu-container button.selectedButton {
+  background-color: white; /* White background */
+  color: var(--color2); /* Text color of the nav bar's background */
+}
+
+
+
+.container-below-top-nav{
+    display: flex;
+    margin-top: 50px; /* Adjust based on the height of the top navbar */
+    padding: 0px;
+    justify-content: center; /* Center the whole content area */
+}
+
+.left-menu-container {
+  position:fixed;
+  left: -15vw;
+    transition: left 0.3s ease-in-out; /* Adjust timing as desired */
+  width: 15%; /* Example: 15% of the viewport width */
+  background-color: var(--color2);
+  text-align: right;
+  height: 100%; /* Full height */
+  min-width: 150px; 
+  display: flex; /* Use flexbox */
+  flex-direction: column; /* Stack buttons vertically */
+  align-items: flex-end; /* Align buttons to the right */
+  padding-top: 60px;
+  /* Additional styling */
+
+}
+
+.left-menu-container.active {
+  left: 0; /* Slide in to be visible */
+}
+
+
+.left-menu-container button {
+  background-color: inherit; /* Inherits the background color */
+  color: white; /* White text color */
+  border: none; /* No border */
+  border-top-left-radius: 50px; /* Elliptical shape on the left */
+  border-bottom-left-radius: 50px; /* Elliptical shape on the left */
+  padding: 5px 20px 5px 40px; /* Top, right, bottom, left padding */
+  box-sizing: border-box; /* Ensures padding doesn't affect overall width */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover */
+  white-space: normal; /* Allow text to wrap */
+  text-align: right; /* Text aligned to the left for multiline support */
+  margin-bottom: 10px; /* Space between buttons */
+  /* Remove margin-left and margin-right styles */
+    position: relative; /* Needed for absolute positioning of pseudo-elements */
+  overflow: hidden; /* Ensures pseudo-elements don't extend outside the button */
+    font-family: var(--font-secondary);
+    font-size: large;
+    font-weight: bold;
+}
+
+
+
+.left-menu-container button:hover, .left-menu-container button.myPhiActiveButton {
+  background-color: white; /* White background on hover */
+  color: var(--color1); /* Font color changes on hover */
+}
+
+
+.content {
+   max-width: 800px; /* Prevents content from getting too wide */
+    margin-left: 15%; /* Same as the width of the left navbar */
+    padding: 20px;
+  flex-grow: 1; /* Take up remaining space */
+  margin: 0 auto; /* Center the content */
+  overflow-y: auto; /* Allow vertical scrolling */
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+  height: 100%; /* Match height of container */
+}
+
+/* Hide scrollbar for Webkit browsers like Chrome and Safari */
+.content::-webkit-scrollbar {
+  display: none;
+}
+/* for menu slide out */
+
+@keyframes slideOut {
+  from { transform: translateX(0); }
+  to { transform: translateX(-10rem); }
+}
+
+.menu-slide-out {
+  animation: slideOut 0.7s forwards;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .left-menu-container {
+    width: 20vw; /* Adjusted for smaller screens */
+  }
+  .content {
+    max-width: 70vw; /* Adjusted for smaller screens */
+  }
+}
