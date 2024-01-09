@@ -1,9 +1,11 @@
 {
-  "name": "node-express",
+  "name": "10106-fullstack-app",
   "version": "1.0.0",
-  "description": "",
+  "description": "Full-stack application with Node.js backend and React frontend",
   "main": "server.js",
   "scripts": {
+    "start": "node server.js",
+    "build": "cd client && npm install && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
