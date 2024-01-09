@@ -21,6 +21,7 @@ export const AuthProvider = ({ children }) => {
   const handleLogin = async (username, password) => {
     try {
       const apiUrl = process.env.REACT_APP_API_BASE_URL;
+      console.log('API URL:', apiUrl); // Temporarily added for debugging
       const response = await fetch(`${apiUrl}/api/authenticate`, {
         method: 'POST',
         headers: {
