@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { pool } = require('../database'); // Adjust the path as necessary
+const { pool } = require('../../database'); // Adjust the path as necessary
 
 // GET endpoint to fetch answers for a student from a specific table
 router.get('/:tableName/:username', (req, res) => {

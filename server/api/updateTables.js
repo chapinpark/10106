@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { poolPromise }  = require('../database'); // because this API uses promises, we need to use the promise-based pool
+const { poolPromise }  = require('../../database'); // because this API uses promises, we need to use the promise-based pool
 
 // Helper function to get columns from a table
 const getColumnsFromTable = async (tableName) => {

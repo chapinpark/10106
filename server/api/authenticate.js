@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { pool } = require('../database'); // Adjust the path as necessary
+const { pool } = require('../../database'); // Adjust the path as necessary
 
 // POST endpoint for authentication
 router.post('/', (req, res) => {

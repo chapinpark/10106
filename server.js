@@ -21,15 +21,15 @@ app.use(bodyParser.json());
 app.use(morgan('dev'));
 
 // Use the router for the '/api/authenticate' path
-const authenticateRouter = require('./api/authenticate');
+const authenticateRouter = require('./server/api/authenticate');
 app.use('/api/authenticate', authenticateRouter);
 
 // Use the router for the '/api/answers' path
-const answersRouter = require('./api/answers'); // adjust the path as necessary
+const answersRouter = require('./server/api/answers'); // adjust the path as necessary
 app.use('/api/answers', answersRouter);
 
 // Use the router for the '/api/update-all-tables' path
-const updateTablesRouter = require('./api/updateTables');
+const updateTablesRouter = require('./server/api/updateTables');
 app.use('/api', updateTablesRouter);
 console.log('updateTablesRouter has been registered');
 
