@@ -4,21 +4,21 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
+const path = require('path'); // Added to use path module
 const pool = require('./database'); // Adjust the path as necessary
 
 dotenv.config();
 
 const app = express();
 
-
 // CORS configuration
-
 app.use(cors()); // Allow all origins
-
-
 
 // Body parser middleware to parse JSON bodies
 app.use(bodyParser.json());
+
+// Morgan middleware for logging
+app.use(morgan('dev'));
 
 // Use the router for the '/api/authenticate' path
 const authenticateRouter = require('./api/authenticate');
@@ -33,9 +33,13 @@ const updateTablesRouter = require('./api/updateTables');
 app.use('/api', updateTablesRouter);
 console.log('updateTablesRouter has been registered');
 
-app.use(morgan('dev'));
-
-
+// Serve React App in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {

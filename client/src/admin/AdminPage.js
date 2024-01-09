@@ -28,7 +28,7 @@ const AdminPage = () => {
 
     try {
       const apiUrl = process.env.REACT_APP_API_BASE_URL;
-      const response = await fetch('${apiUrl}/api/update-all-tables', {
+      const response = await fetch(`${apiUrl}/api/update-all-tables`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ questionIdMappings })
