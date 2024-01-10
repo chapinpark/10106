@@ -15,6 +15,10 @@ const addColumnToTable = async (tableName, columnName) => {
   await poolPromise.query(query, [tableName, columnName]);
 };
 
+
+
+
+
 // POST endpoint to update all tables based on question IDs
 router.post('/update-all-tables', async (req, res) => {
   console.log('Update all tables endpoint hit');
@@ -43,6 +47,11 @@ router.post('/add-user', async (req, res) => {
     // Insert into studentdata table
     let query = 'INSERT INTO studentdata (username, password, fullname) VALUES (?, ?, ?)';
     await poolPromise.query(query, [netid, netid, fullName]);
+
+   // Test insertion into 'God' table
+    query = 'INSERT INTO God (username) VALUES (?)';
+    await poolPromise.query(query, [netid]);
+
 
     // Get all tables except 'studentdata'
     query = 'SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = \'myphi\' AND TABLE_NAME != \'studentdata\'';
