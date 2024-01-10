@@ -60,6 +60,12 @@ export const AuthProvider = ({ children }) => {
   }
 };
 
+    // Method to update login state
+
+  //const updateLoginState = () => {
+  //  sessionStorage.setItem('isLoggedIn', 'true');
+  //  setIsLoggedIn(true);
+  //};
 
   return (
     <AuthContext.Provider value={{ isLoggedIn, username, fullName, handleLogin }}>

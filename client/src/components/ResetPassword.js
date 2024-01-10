@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
 function ResetPassword({ username, onResetSuccess }) {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const { handleLogin } = useContext(AuthContext);
 
- const resetPassword = async () => {
+const resetPassword = async () => {
   try {
     const apiUrl = process.env.REACT_APP_API_BASE_URL;
     const response = await fetch(`${apiUrl}/api/reset-password`, {
@@ -16,15 +19,19 @@ function ResetPassword({ username, onResetSuccess }) {
       body: JSON.stringify({ username, newPassword }),
     });
 
+    const data = await response.json(); // Parse the JSON response
+
     if (!response.ok) {
-      throw new Error('Password reset failed');
+      throw new Error(data.message || 'Password reset failed'); // Use the message from the response, if available
     }
 
-    return response.json();
+    return data; // Return the parsed data
   } catch (error) {
     setErrorMessage(error.message);
+    return null; // Explicitly return null in case of an error
   }
 };
+
 
 
   const handleSubmit = async (e) => {
@@ -43,12 +50,14 @@ function ResetPassword({ username, onResetSuccess }) {
       return;
     }
 
-    // Call the resetPassword function and handle the response
+      // Call the resetPassword function and handle the response
     const result = await resetPassword();
-    if (result) {
-      // Handle successful password reset
-      onResetSuccess();
-    }
+if (result && result.message === 'Password successfully updated.') {
+  // Handle successful password reset
+    await handleLogin(username, newPassword);
+    onResetSuccess();
+}
+
   };
 
   
