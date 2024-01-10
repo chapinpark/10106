@@ -31,10 +31,13 @@ app.use('/api/answers', answersRouter);
 // Use the router for the '/api/update-all-tables' path
 const updateTablesRouter = require('./server/api/updateTables');
 app.use('/api', updateTablesRouter);
-console.log('updateTablesRouter has been registered');
+
+// use the router to reset password
+const resetPasswordRouter = require('./server/api/resetPasswordRouter'); // Adjust 
+app.use('/api/reset-password', resetPasswordRouter);
+
 
 // Serve React App in production
-
 
 app.use(express.static(path.join(__dirname, 'client', 'build')));
 app.get('*', (req, res) => {

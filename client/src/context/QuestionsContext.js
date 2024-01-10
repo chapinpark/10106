@@ -23,7 +23,7 @@ export const QuestionsProvider = ({ children }) => {
   // Otherwise, use newAnswer as it is (assuming it's a string for long answers)
   const answerString = Array.isArray(newAnswer) ? newAnswer.join(',') : newAnswer;
 
-  console.log('Sending update to server:', answerString);
+ // console.log('Sending update to server:', answerString);
 
    try {
     const apiUrl = process.env.REACT_APP_API_BASE_URL;

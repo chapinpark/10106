@@ -43,6 +43,31 @@ const AdminPage = () => {
     }
   };
 
+const [netid, setNetid] = useState('');
+const [fullName, setFullName] = useState('');
+
+  const handleAddUser = async () => {
+  try {
+    const apiUrl = process.env.REACT_APP_API_BASE_URL;
+    const response = await fetch(`${apiUrl}/api/add-user`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ netid, fullName })
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to add user');
+    }
+    console.log('User added successfully');
+    // Optionally, reset the form fields
+    setNetid('');
+    setFullName('');
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
+
+
   if (!loggedIn) {
     return (
       <div>
@@ -62,6 +87,25 @@ const AdminPage = () => {
     <div>
       <h1>Welcome to the Admin Page</h1>
       <button onClick={handleUpdateAllTables}>Update All Tables</button>
+
+      {/* ... inside your return statement ... */}
+<div>
+  <h2>Add New User</h2>
+  <input
+    type="text"
+    value={netid}
+    onChange={(e) => setNetid(e.target.value)}
+    placeholder="Enter NetID"
+  />
+  <input
+    type="text"
+    value={fullName}
+    onChange={(e) => setFullName(e.target.value)}
+    placeholder="Enter Full Name"
+  />
+  <button onClick={handleAddUser}>Add User</button>
+</div>
+
       {/* ... other component code ... */}
     </div>
   );

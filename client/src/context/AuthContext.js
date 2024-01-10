@@ -18,34 +18,48 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const handleLogin = async (username, password) => {
-    try {
-      const apiUrl = process.env.REACT_APP_API_BASE_URL;
-      console.log('API URL:', apiUrl); // Temporarily added for debugging
-      const response = await fetch(`${apiUrl}/api/authenticate`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-      });
+ const handleLogin = async (username, password) => {
+  try {
+    const apiUrl = process.env.REACT_APP_API_BASE_URL;
+    const response = await fetch(`${apiUrl}/api/authenticate`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password }),
+    });
 
+      // Check if username and password are the same
+
+
+    if (response.ok && !(username === password)) {
       const data = await response.json();
-      if (response.ok) {
-        sessionStorage.setItem('isLoggedIn', 'true');
-        sessionStorage.setItem('fullName', data.fullName);
-        sessionStorage.setItem('username', username); // Store the username in sessionStorage
-        setIsLoggedIn(true);
-        setFullName(data.fullName);
-        setUsername(username); // Update the username state
-        return true;
+      sessionStorage.setItem('isLoggedIn', 'true');
+      sessionStorage.setItem('fullName', data.fullName);
+      sessionStorage.setItem('username', username); // Store the username in sessionStorage
+      setIsLoggedIn(true);
+      setFullName(data.fullName);
+      setUsername(username); // Update the username state
+      return { success: true };
+    } else {
+      // If response is not OK, we need to find out why
+      if (response.status === 404) { // Assuming 404 for user not found
+        return { success: false, reason: 'USER_NOT_FOUND' };
+      } else if (response.status === 401) { // Assuming 401 for wrong password
+        return { success: false, reason: 'WRONG_PASSWORD' };
+      }  else if (username === password) {
+        return { success: false, reason: 'RESET_PASSWORD' };
       } else {
-        return false;
+        // Handle other HTTP errors
+        return { success: false, reason: 'OTHER_ERROR' };
       }
-    } catch (error) {
-      return false;
     }
-  };
+  } catch (error) {
+    console.error('Login error:', error);
+    return { success: false, reason: 'NETWORK_ERROR' };
+  }
+};
+
 
   return (
     <AuthContext.Provider value={{ isLoggedIn, username, fullName, handleLogin }}>
