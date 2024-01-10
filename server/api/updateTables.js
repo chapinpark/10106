@@ -48,11 +48,23 @@ router.post('/add-user', async (req, res) => {
     let query = 'INSERT INTO studentdata (username, password, fullname) VALUES (?, ?, ?)';
     await poolPromise.query(query, [netid, netid, fullName]);
 
-   // Test insertion into 'God' table
+   // Test insertion into other tables
     query = 'INSERT INTO God (username) VALUES (?)';
     await poolPromise.query(query, [netid]);
 
+ query = 'INSERT INTO FreeWill (username) VALUES (?)';
+    await poolPromise.query(query, [netid]);
 
+     query = 'INSERT INTO PersonalIdentity (username) VALUES (?)';
+    await poolPromise.query(query, [netid]);
+
+     query = 'INSERT INTO Belief (username) VALUES (?)';
+    await poolPromise.query(query, [netid]);
+
+     query = 'INSERT INTO Ethics (username) VALUES (?)';
+    await poolPromise.query(query, [netid]);
+
+    /* commenting out dynamic way of getting tables, whihc did not work on jawsdb sever
     // Get all tables except 'studentdata'
     query = 'SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = \'myphi\' AND TABLE_NAME != \'studentdata\'';
     const [tables] = await poolPromise.query(query);
@@ -66,7 +78,7 @@ router.post('/add-user', async (req, res) => {
       query = `INSERT INTO ?? (\`username\`, ${columnNames.join(', ')}) VALUES (?, ${placeholders})`;
       await poolPromise.query(query, [table.TABLE_NAME, netid, ...values]);
     }
-
+*/
     res.status(200).json({ message: 'User added successfully' });
   } catch (error) {
     console.error('Error adding user:', error);
