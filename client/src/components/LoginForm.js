@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import ResetPassword from './ResetPassword'; // Adjust the path as needed
-
+import LoginInstructions from './LoginInstructions';
 
 function LoginForm({ onLoginSuccess }) {
   const { handleLogin } = useContext(AuthContext);
@@ -43,7 +43,9 @@ function LoginForm({ onLoginSuccess }) {
           onLoginSuccess();
         }}
       />
-    ) : (
+      ) : (
+          <div>
+            <LoginInstructions /> {/* gives instrictions for first time visitors */}
         <form onSubmit={handleSubmit}>
           <label>
             Username: 
@@ -63,7 +65,8 @@ function LoginForm({ onLoginSuccess }) {
           </label>
           <button type="submit">Login</button>
           {errorMessage && <p>{errorMessage}</p>}
-        </form>
+            </form>
+            </div>
       )}
     </div>
   );
