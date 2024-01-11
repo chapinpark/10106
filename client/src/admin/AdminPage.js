@@ -84,11 +84,12 @@ const [fullName, setFullName] = useState('');
   }
 
   return (
-    <div>
-      <h1>Welcome to the Admin Page</h1>
-      <button onClick={handleUpdateAllTables}>Update All Tables</button>
+    <div >
+      <h1>Admin Page</h1>
+      
+      
+      Add all tables in question files to the database:  <button onClick={handleUpdateAllTables}>Update All Tables</button>
 
-      {/* ... inside your return statement ... */}
 <div>
   <h2>Add New User</h2>
   <input

@@ -22,7 +22,7 @@ const addColumnToTable = async (tableName, columnName) => {
 // POST endpoint to update all tables based on question IDs
 router.post('/update-all-tables', async (req, res) => {
   console.log('Update all tables endpoint hit');
-  const { questionIdMappings } = req.body; // Expected to be an object with tableName as key and array of questionIds as value
+  const { questionIdMappings } = req.body;
 
   try {
     for (const [tableName, questionIds] of Object.entries(questionIdMappings)) {
@@ -30,7 +30,16 @@ router.post('/update-all-tables', async (req, res) => {
       const columnsToAdd = questionIds.filter(id => !existingColumns.includes(id));
 
       for (const column of columnsToAdd) {
-        await addColumnToTable(tableName, column);
+        try {
+          await addColumnToTable(tableName, column);
+        } catch (innerError) {
+          if (innerError.code === 'ER_DUP_FIELDNAME') {
+            console.log(`Column ${column} already exists in ${tableName}. Skipping.`);
+            continue;
+          } else {
+            throw innerError; // rethrow the error if it's not a duplicate column error
+          }
+        }
       }
     }
     res.status(200).json({ message: 'All tables updated successfully' });
@@ -39,6 +48,7 @@ router.post('/update-all-tables', async (req, res) => {
     res.status(500).json({ message: 'Error updating tables', error });
   }
 });
+
 
 router.post('/add-user', async (req, res) => {
   const { netid, fullName } = req.body;
