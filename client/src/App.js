@@ -55,10 +55,14 @@ function App() {
         return <Description />;
     }
   };
+// sets changes in background color for myphi page
+ const appStyle = {
+    backgroundColor: activePage === 'myphi' ? '#fff2f2' : 'initial',
+  };
 
   return (
     <Router>
-      <div className="app-container">
+      <div className="app-container" style={appStyle}>
         <Routes>
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/" element={
@@ -69,7 +73,10 @@ function App() {
               <div className="container-below-top-nav">
                 <div className={`left-menu-container ${activePage === 'myphi' && isLoggedIn ? 'active' : ''}`}>
                   {activePage === 'myphi' && isLoggedIn ?  
-                    <MyPhiMenu setActiveMyPhiPage={setActiveMyPhiPage} onReturnToLastVisitedPage={handleReturnToLastVisited} /> : null}
+                    <div>
+                    <MyPhiMenu setActiveMyPhiPage={setActiveMyPhiPage} onReturnToLastVisitedPage={handleReturnToLastVisited} />
+              
+                    </div>: null}
                 </div>
                 <div className="content">
                   {renderContent()}

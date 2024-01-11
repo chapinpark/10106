@@ -1,0 +1,25 @@
+.utilities-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-top: 40px;
+}
+
+.utilities-menu button {
+  width: 60px;
+  height: 60px;
+  border-radius: 100px;
+  border: none;
+  background-color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: right;
+  font-size: 14px;
+  text-align: center;
+  color: var(--color2);
+}
+
+.utilities-menu button:hover {
+  background-color: #f0f0f0;
+}

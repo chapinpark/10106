@@ -37,6 +37,7 @@ function MyPhiMenu({ setActiveMyPhiPage, onReturnToLastVisitedPage }) {
       >
         What should I believe?
       </button>
+      
       <button 
         className={activeMyPhiButton === 'Ethics' ? 'myPhiActiveButton' : ''}
         onClick={() => handleButtonClick('Ethics')}
@@ -44,7 +45,12 @@ function MyPhiMenu({ setActiveMyPhiPage, onReturnToLastVisitedPage }) {
         How should I live?
       </button>
 
-    
+     <button 
+        className={activeMyPhiButton === 'FAQ' ? 'myPhiActiveButton' : ''}
+        onClick={() => handleButtonClick('FAQ')}
+      >
+        FAQ
+      </button>
       
     </div>
   );

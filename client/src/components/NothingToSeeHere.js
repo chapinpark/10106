@@ -1,7 +1,7 @@
 import React from 'react';
 import './MasterQuestion.css';
 
-function QuestionContainer() {
+function NothingToSee() {
   return (
     <div className="questionContainer">
           Nothing to see here yet .... <br></br>
@@ -10,4 +10,4 @@ function QuestionContainer() {
   );
 }
 
-export default QuestionContainer;
+export default NothingToSee;
