@@ -20,7 +20,7 @@ function MainMenu({ onMenuSelect }) {
         className={activeButton === 'syllabus' ? 'selectedButton' : ''}
         onClick={() => handleClick('syllabus')}
       >
-        syllabus
+        schedule
       </button>
       <button
         className={activeButton === 'myphi' ? 'selectedButton' : ''}

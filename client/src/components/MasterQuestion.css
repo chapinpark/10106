@@ -63,3 +63,8 @@
     outline: none; /* Remove outline */
 }
 
+.questionContainer.contradictionContainer {
+    background-color: var(--color1);
+    color: white;
+}
+

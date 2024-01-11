@@ -2,7 +2,7 @@
 import React from 'react';
 import './CoursePages.css';
 import DescriptionBoxComponent from '../components/DescriptionBoxComponent'; // Adjust the path based on your folder structure
-
+import GradeScheme from '../components/GradeScheme';
 
 function Description() {
   return (
@@ -53,7 +53,7 @@ function Description() {
     of the semester. Which questions you will be asked will depend, in part, on your answers to prior questions in the course. The purpose of this is to help you to see how your views about one topic interact with your views about other topics covered in the course. If you change your mind about a topic covered earlier in the course, you're always free to go back and change your answers to those questions. You should think of this page as your attempt, over the course of the semester, to work out what you really think about the topics we will be discussing. You should spend a lot of time on it; it will be the main component of evaluations for the course. <br /><br />
           
     Ideally, you should update this "My Philosophy" page after every
-    class meeting. Your work on this page will be evaluated twice: once around halfway through the semester, and once at the end of the semester. In both cases, the evaluation will have a written and oral component. The written component will be based on your answers to the "My Philosophy" questions, and the oral component will be based on  conversation with Professor Speaks or your TA about your answers to the questions. For more details on how the evaluation will work, see the "FAQ section of the My Philosophy page. <br /><br />
+    class meeting. Your work on this page will be evaluated twice: once around halfway through the semester, and once at the end of the semester. In both cases, the evaluation will have a written and oral component. The written component will be based on your answers to the "My Philosophy" questions, and the oral component will be based on  conversation with Professor Speaks or your TA about your answers to the questions. For more details on how you should approach this project, see the FAQ section of the My Philosophy page. <br /><br />
   </p>
 
   <h2>Grading</h2>
@@ -77,7 +77,9 @@ function Description() {
     your discussion group. <br /><br />
 
     Notre Dame has no official way of indexing numerical grades to letter
-    grades. This is the system that will be used in this course:<br /><br />
+        grades. This is the system that will be used in this course:<br /><br />
+        
+<GradeScheme />
   
 
 </div>

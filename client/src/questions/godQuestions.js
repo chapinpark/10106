@@ -488,7 +488,19 @@ export const godQuestions = (answers, classDay, theses) => [
     questionCondition: (answers) => showIf(answers, 'naturalevilpremises', 4) || showIf(answers, 'rowesfawnpremises', 4) || showIf(answers, 'horrificevilpremises', 4)
     },
   
-    // #endregion
+  // #endregion
+
+  // #region contradiction for those who think that there is both a sound argument for god's existence and a sound argument against it
+
+
+  {
+    questionId: "atheismtheismcontradiction",
+    questionType: "Contradiction",
+    questionText: "There can't both be a sound argument for the existence of God and a sound argument against the existence of God. (The conclusion of a sound argument is always true.) Think about how best to resolve this contradiction in your views.",
+    questionCondition: (answers, classDay, theses) => (theses["soundargumentfortheism"] === 1 & theses["soundargumentagainsttheism"] === 1)
+  },
+
+  // #endregion
 
     // #region life after death
     
@@ -586,11 +598,124 @@ export const godQuestions = (answers, classDay, theses) => [
     questionType: "LongAnswer",
     questionText: "You believe that God exists, but that there is no life after death. But consider the problem posed by tragic cases of children born with debilitating conditions which lead to their death soon after their birth. Wouldn't a perfectly good God make everyone's life worth living? And how is that possible for such a child without the possibility of life after death?",
     questionCondition: (answers, classDay, theses) => showIf(answers, "isthereanafterlife", 2) && theses["soundargumentfortheism"] === 1
-  }
+  },
   
     // #endregion
 
-    // #region closing questions for god section
+  // #region closing questions for god section
+  
+  {
+  questionId: "nosoundarguments",
+  questionType: "Radio",
+  questionText: "It looks like you don't think that any of the arguments we've discussed for the existence of God are sound, and also don't think that any of the arguments that we've discussed against the existence of God are sound. Do you believe that God exists?",
+  questionOptions: ["Yes", "No"],
+  questionCondition: (answers, classDay, theses) => showIf(answers, "argumentfrompointlessevil", 2) &&
+      (
+        showIf(answers, "naturalevilsound", 2) ||
+        showIf(answers, "rowesfawnsound", 2) ||
+        showIf(answers, "horrrificevilsound", 2)
+      ) &&
+      (
+        showIf(answers, "iskalamsound", 2) &&
+        showIf(answers, "iscosmologicalsound", 2) &&
+        showIf(answers, "finetuningsound", 2)
+      ),
+},
+{
+  questionId: "theismrejectallarguments",
+  questionType: "Radio",
+  questionText: "Is that because you think that there's a sound and persuasive argument for the existence of God that we haven't discussed in this class?",
+  questionOptions: ["Yes", "No"],
+  questionCondition: (answers, classDay, theses) => showIf(answers, "nosoundarguments", 1),
+},
+{
+  questionId: "novetheisticargument",
+  questionType: "LongAnswer",
+  questionText: "Explain what the argument is, and why you think that it is sound.",
+  questionCondition: (answers, classDay, theses) => showIf(answers, "theismrejectallarguments", 1),
+},
+{
+  questionId: "theismnoargument",
+  questionType: "LongAnswer",
+  questionText: "Later on in the class, we'll talk about whether and when you should believe something despite not knowing of any good argument for it. How would you explain why you believe that God exists? Imagine that you are trying to explain this to someone who does not believe in God.",
+  questionCondition: (answers, classDay, theses) => showIf(answers, "theismrejectallarguments", 2),
+  },
+
+   {
+    questionId: "theistwhothinksabilitytodoevilisimportant",
+    questionType: "LongAnswer",
+    questionText: "You think that God exists, and you also think that having the ability to freely do evil is an important good. Here's a worry about that combination of views. First, many people have thought that God is not only perfectly good,  but also necessarily perfectly good. After all, wouldn't it be better to be so perfect that it is literally impossible for you to do wrong? But if that is true, then it is impossible for God to do evil, from which it seems to follow that God can't freely do evil. But then how can it be a very important good for us to be able to freely cause evil? Isn't God the greatest possible being? If God lacks this good, how can it be so important for us?",
+    questionCondition: (answers, classDay, theses) => theses["theism"] === 1 && (showIf(answers, "doesfreewillexplain", 1) || (showIf(answers, "doesfreewillexplain", 2) && !(showIf(answers, "fwdelementstoreject", 3)))), 
+  },
+
+{
+  questionId: "theismalternatives",
+  questionType: "Radio",
+  questionText: "You don't believe that the classical God exists. How would you describe your view?",
+  questionOptions: [
+    "I believe simple atheism",
+    "I'm a quasi-theist",
+    "I'm an agnostic. I don't believe any of these views because I can't decide which is true.",
+  ],
+  questionCondition: (answers, classDay, theses) => showIf(answers, "nosoundarguments", 2) || theses["soundargumentagainsttheism"] === 1,
+},
+{
+  questionId: "atheismrejectallarguments",
+  questionType: "Radio",
+  questionText: "Is that because you think that there's a sound and convincing argument for atheism that we haven't discussed in this class?",
+  questionOptions: ["Yes", "No"],
+  questionCondition: (answers, classDay, theses) => showIf(answers, "theismalternatives", 1),
+},
+{
+  questionId: "novelatheisticargument",
+  questionType: "LongAnswer",
+  questionText: "Explain what the argument is, and why you think that it is sound.",
+  questionCondition: (answers, classDay, theses) => showIf(answers, "atheismrejectallarguments", 1),
+},
+{
+  questionId: "atheismnoargument",
+  questionType: "LongAnswer",
+  questionText: "Later on in the class, we'll talk about whether and when you should believe something despite not knowing of any good argument for it. How would you explain why you believe that atheism is true? Imagine that you are trying to explain this to someone who believes in God.",
+  questionCondition: (answers, classDay, theses) => showIf(answers, "atheismrejectallarguments", 2),
+},
+{
+  questionId: "twokindsquasitheism",
+  questionType: "Radio",
+  questionText: "Most quasi-theists believe that some being exists, which has some but not all of the properties which the classical conception attributes to God. Is your view like that?",
+  questionOptions: ["Yes", "No"],
+  questionCondition: (answers, classDay, theses) => showIf(answers, "theismalternatives", 2),
+},
+{
+  questionId: "definingquasigod",
+  questionType: "Checkbox",
+  questionText: "Let's call that being 'quasi-God.' Which of the properties that the classical conception ascribes to God do you think that quasi-God does not have?",
+  questionOptions: [
+    "omnipotent",
+    "perfectly good",
+    "omniscient",
+    "creator of the universe",
+  ],
+  questionCondition: (answers, classDay, theses) => showIf(answers, "twokindsquasitheism", 1),
+},
+{
+  questionId: "whyquasigod",
+  questionType: "LongAnswer",
+  questionText: "Why do you think that it is more likely that quasi-God, so defined, exists, rather than the classical God?",
+  questionCondition: (answers, classDay, theses) => showIf(answers, "twokindsquasitheism", 1),
+},
+{
+  questionId: "novelquasitheism",
+  questionType: "LongAnswer",
+  questionText: "Then explain your preferred version of quasi-theism, and say why you think that it is more likely to be true than either of simple theism or simple atheism.",
+  questionCondition: (answers, classDay, theses) => showIf(answers, "twokindsquasitheism", 2),
+},
+{
+  questionId: "questionforagnostic",
+  questionType: "LongAnswer",
+  questionText: "When thinking about a question as big and complex as the question of whether God exists, it's not unreasonable to have some doubts about any of the answers. But if you think about it, we have beliefs about all sorts of things about which we cannot be completely certain. For example, I believe that Notre Dame will win more football games than it loses next year, even though of course it might turn out that they won't. Is there one of the options above that you think is most likely to be true? If so, pick that one. If not, explain why the question of God's existence is particularly hard for you to form any beliefs at all about.",
+  questionCondition: (answers, classDay, theses) => showIf(answers, "theismalternatives", 3),
+},
+
 
     // #endregion
 ];
