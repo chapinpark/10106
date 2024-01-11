@@ -141,6 +141,10 @@ h2{
   color: var(--color1); /* Font color changes on hover */
 }
 
+.myphi-menu{
+  display: flex; /* Use flexbox */
+  flex-direction: column; /* Stack buttons vertically */
+}
 
 .content {
    max-width: 800px; /* Prevents content from getting too wide */
