@@ -157,6 +157,7 @@ h2{
   flex-direction: column; /* Stack buttons vertically */
 }
 
+
 .content {
    max-width: 900px; /* Prevents content from getting too wide */
     margin-left: 15%; /* Same as the width of the left navbar */
@@ -174,6 +175,43 @@ h2{
 .content::-webkit-scrollbar {
   display: none;
 }
+
+
+/* Hamburger Icon Styling; visibility controlled by screen size React state */
+.hamburger-icon {
+  position: fixed;
+  left: 30px;
+  display: block;
+  cursor: pointer;
+  /* Positioning and size */
+}
+
+.hamburger-icon span {
+  display: block;
+  width: 30px; /* Width of the line */
+  height: 3px; /* Increased height of the line for thickness */
+  background-color: var(--color2); /* Color of the line */
+  margin: 5px 0; /* Spacing between lines */
+  transition: all 0.3s ease-in-out; /* Smooth transition */
+}
+/* Toggle to 'X' */
+/* Toggle to 'X' */
+/* Toggle to 'X' */
+.hamburger-icon.open span:nth-child(1) {
+  transform: rotate(45deg) translate(3px, 8px); /* Adjusted translation for the top line */
+}
+
+.hamburger-icon.open span:nth-child(2) {
+  opacity: 0; /* Middle line disappears */
+}
+
+.hamburger-icon.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(3px, -8px); /* Adjusted translation for the bottom line */
+}
+
+
+
+
 /* for menu slide out */
 
 @keyframes slideOut {
@@ -185,12 +223,38 @@ h2{
   animation: slideOut 0.7s forwards;
 }
 
+
+
+
 /* Responsive Design */
-@media (max-width: 768px) {
+
+
+/* Larger Screens */
+@media (min-width: 769px) {
   .left-menu-container {
-    width: 20vw; /* Adjusted for smaller screens */
+     left: -300px; /* Keep it hidden initially */
+    transition: left 0.3s;
   }
-  .content {
-    max-width: 70vw; /* Adjusted for smaller screens */
+}
+
+
+
+
+@media (max-width: 768px) {
+ 
+
+  .left-menu-container {
+    left: -300px; /* Initially hidden on smaller screens */
+    transition: left 0.3s;
+        position: fixed;
+  }
+  .left-menu-container.active {
+    left: 0; /* Visible when active */
+  }
+
+
+  /* When menu is active */
+  .left-menu-container.active {
+    left: 0; /* Bring into view */
   }
 }
