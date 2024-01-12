@@ -84,7 +84,7 @@ const topics = [
     { name: "Does God Exist?", duration: 8, color: color2},
     { name: "Do I have free will?", duration: 4, color: color1 },
     { name: "What am I?", duration: 7, color: color2 },
-    { name: "What should I believe?", duration: 5, color: color2 },
+    { name: "What should I believe?", duration: 5, color: color1 },
     { name: "How should I live?", duration: 5, color: color2},
   ];
 
@@ -104,7 +104,7 @@ const topics = [
     if (sectionIndex < sections.length) {
       let isFirstDayOfSection = dayCount === sections[sectionIndex].duration;
       let sectionCellStyle = isFirstDayOfSection ? {
-        borderRight: `20px solid ${sections[sectionIndex].color}`,
+        borderRight: `30px solid ${sections[sectionIndex].color}`,
         color: sections[sectionIndex].color,
         verticalAlign: 'middle',
         lineHeight: `${dayCount * 20}px` // Adjust line height based on the number of rows

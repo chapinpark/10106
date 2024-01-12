@@ -1,0 +1,30 @@
+
+
+.FAQ-container {
+    background: white;
+    margin-bottom: 40px;
+    padding: 10px;
+}
+
+.FAQdiv {
+  background-color: white;
+  cursor: pointer;
+}
+
+.FAQquestion {
+  font-weight: bold;
+  padding: 10px;
+  color: var(--color2);
+}
+
+.FAQanswer {
+  font-weight: normal;
+  padding-left: 40px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+}
+
+.FAQanswer.open {
+  max-height: 1000px; /* Adjust as necessary */
+}

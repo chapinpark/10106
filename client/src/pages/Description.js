@@ -12,7 +12,7 @@ function Description() {
         <div>
   <h2>Schedule<br /></h2>
   <p>
-    Tuesday & Thursday, 12:30-1:45 in 105 Jordan Hall of Science
+    Tuesday & Thursday, 12:30-1:45 in 155 DeBartolo Hall
   </p>
   
   <h2>Topic<br /></h2>
@@ -56,6 +56,34 @@ function Description() {
     class meeting. Your work on this page will be evaluated twice: once around halfway through the semester, and once at the end of the semester. In both cases, the evaluation will have a written and oral component. The written component will be based on your answers to the "My Philosophy" questions, and the oral component will be based on  conversation with Professor Speaks or your TA about your answers to the questions. For more details on how you should approach this project, see the FAQ section of the My Philosophy page. <br /><br />
   </p>
 
+         <h2>Honor code</h2>
+
+      In all of their assignments, students are responsible for compliance
+      with the University's honor code, information about which is available <a href="http://honorcode.nd.edu/" target="_blank">here</a>. You should
+      acquaint yourself with the policies and penalties described there.<br /><br />
+
+      Sometimes, it can be hard to know what, exactly, the honor code implies
+      with respect to different disciplines. For this reason, the philosophy
+      department has prepared a document explaining, using examples, what the
+      honor code requires of students when writing a philosophy paper. I
+      strongly recommend that you read this document, which is available <a href="http://www3.nd.edu/~jspeaks/_format/sitewide_files/philohonorcode.pdf" target="_blank">here</a>. It is
+      possible to violate the honor code without intending to do so;
+      the best way to avoid this is to carefully read through the philosophy
+      department's guidelines. <br /><br />
+
+      That document pre-dates generative AI. Any use of chatGPT or other AI tools in this course is a violation of the honor code.<br/><br/>
+
+      The most common type of honor code violation occurs when a student reads
+      an internet source while working on a paper and &mdash; either
+      intentionally or unintentionally &mdash; uses material from that source
+      in his or her paper, but does not cite the source. If you read something
+      not assigned in this course as part of your work on a paper, you must
+      cite the source, whether or not you quote anything from that source.
+      <br /><br />
+
+      If you are in doubt about what the honor code requires of you in a
+      particular case, please ask me or your TA.
+
   <h2>Grading</h2>
   <p>
     Your grade will be determined as follows:
@@ -81,6 +109,21 @@ function Description() {
         
 <GradeScheme />
   
+         <h2>Contact information</h2>
+
+      You should feel free to get in touch with me or your designated teaching
+      assistant if you have any questions about the course, or about how
+      you're doing in the course, or if you just want to pursue some of the
+      topics we're discussing further. You can always get in touch with me by
+      posting to the "Ask a TA or Prof" channel on Slack, and this often the easiest
+      route if you just have a quick question about the readings or
+      assignments. You can book a time to meet with me <a href="https://calendly.com/jspeaks/office-hours" target="blank">here</a>. If none of the listed times work for you, just let me know and we will figure out a time that does work.<br /><br />
+
+      The teaching assistants do most of the grading
+      for the course, hold office hours, and are in general available outside
+      of class to help you with the material. Contact
+      information for your TA will be pinned to the top of the channel for your
+      discussion group on Slack.
 
 </div>
 

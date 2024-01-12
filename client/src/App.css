@@ -147,7 +147,7 @@ h2{
 }
 
 .content {
-   max-width: 800px; /* Prevents content from getting too wide */
+   max-width: 900px; /* Prevents content from getting too wide */
     margin-left: 15%; /* Same as the width of the left navbar */
     padding: 20px;
   flex-grow: 1; /* Take up remaining space */
@@ -156,6 +156,7 @@ h2{
   scrollbar-width: none; /* For Firefox */
   -ms-overflow-style: none; /* For Internet Explorer and Edge */
   height: 100%; /* Match height of container */
+  padding-bottom: 50px;
 }
 
 /* Hide scrollbar for Webkit browsers like Chrome and Safari */
