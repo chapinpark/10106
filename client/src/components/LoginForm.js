@@ -24,7 +24,7 @@ function LoginForm({ onLoginSuccess }) {
       if (response.reason === 'USER_NOT_FOUND') {
         setErrorMessage('That username is not among the listed netids for this course. Be sure that you are using your netid rather than your email address or your numeric Notre Dame ID. (So, e.g., jspeaks rather than jspeaks@nd.edu or 123456789.) If you are using your netid and are registered for the course, please send an email to jspeaks@nd.edu.');
       } else if (response.reason === 'WRONG_PASSWORD') {
-        setErrorMessage('That is not the password saved for that netid. (Remember to use your netid -- like jspeaks -- rather than your email address or your nine-digit Notre Dame ID number.) You can try again, or, if you forgot your password, send an email to jspeaks@nd.edu.');
+        setErrorMessage('That is not the password saved for that netid. You can try again, or, if you forgot your password, send an email to jspeaks@nd.edu.');
       } else if (response.reason === 'RESET_PASSWORD') {
         setResetPassword(true); // Show the password reset field
       }
