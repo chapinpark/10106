@@ -28,12 +28,13 @@ function MainMenu({ onMenuSelect }) {
       >
         my philosophy
       </button>
-      <button
-        className={activeButton === 'slack' ? 'selectedButton' : ''}
-        onClick={() => handleClick('slack')}
-      >
-        slack
-      </button>
+     <button
+    className={activeButton === 'slack' ? 'selectedButton' : ''}
+    onClick={() => window.open('https://philo1016.slack.com/', '_blank')}
+>
+    slack
+</button>
+
     </div>
   );
 }
