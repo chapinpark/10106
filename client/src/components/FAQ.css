@@ -3,7 +3,8 @@
 .FAQ-container {
     background: white;
     margin-bottom: 40px;
-    padding: 10px;
+    padding: 20px;
+    box-shadow: var(--standard-box-shadow);
 }
 
 .FAQdiv {
@@ -22,9 +23,10 @@
   padding-left: 40px;
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.5s ease;
+  transition: max-height 0.5s ease, padding-bottom 0.5s ease;
 }
 
 .FAQanswer.open {
   max-height: 1000px; /* Adjust as necessary */
+  padding-bottom: 25px;
 }

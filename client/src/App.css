@@ -30,6 +30,17 @@ body{
   font-size: 20px;
 }
 
+a {
+    color: var(--color2); /* Sets the default color */
+    text-decoration: none; /* Removes underline */
+    transition: color 0.3s; /* Smooth transition for color change */
+}
+
+a:hover, a:active {
+    color: var(--color1); /* Changes color on hover and click */
+}
+
+
 h1{
   color: var(--color2);
   font-family: var(--font-display);

@@ -28,7 +28,11 @@ const FAQ = () => {
           Why are we doing this rather than more typical papers and exams?
         </div>
         <div className={`FAQanswer ${openFAQ[2] ? 'open' : ''}`}>
-          My main hope is that you will come out of the course knowing what you believe, and why you believe it, better than you did coming in. I think that if that is the goal (and it is not the main goal of every philosophy class) then working on your My Philosophy page is better than either papers or exams. The questions you will be asked are tailored toward your views, and so will help you to see the distinctive strengths and weaknesses of the positions on these topics you find plausible. All of your time will be spent trying to figure out what you think, how you can defend your views, and how you should reply to arguments for opposing views.
+          This assignment is not so different than a long paper that you write over the course of the semester. Just as with an ordinary essay, you should edit your answers and make your writing as clear and well-structured as possible. <br /><br />
+
+          It differs from an ordinary essay in three ways. First, you will work on it over a much longer period of time than an ordinary paper. Second, it covers many more topics than an ordinary essay. Third, and most important, the structure of this project requires you to respond to questions about the views you endorse.<br /><br />
+          
+          My main hope is that you will come out of the course knowing what you believe, and why you believe it, better than you did coming in. The questions you will be asked are tailored toward your views, and so will help you to see the distinctive strengths and weaknesses of the positions on these topics you find plausible. All of your time will be spent trying to figure out what you think, how you can defend your views, and how you should reply to arguments for opposing views.
         </div>
       </div>
 
@@ -64,7 +68,7 @@ const FAQ = () => {
           What does it mean if a contradiction notification pops up?
         </div>
         <div className={`FAQanswer ${openFAQ[5] ? 'open' : ''}`}>
-            Two views are contradictory if it is impossible for them both to be true. Your goal is to come up with the consistent -- non-contradictory -- combination of views which you think is most likely to be true. If a contradiction notification pops up, it will explain what the contradiction is and where it arose from. (If you are confused about this explanation, just ask me or your TA.) You should think about how to revise your views to remove the contradiction. 
+            Two views are contradictory if it is impossible for them both to be true. Your goal is to come up with the consistent -- non-contradictory -- combination of views which you think is most likely to be true. If a contradiction notification pops up, it will explain which answers of yours create the contradiction. (If you are confused about this explanation, just ask me or your TA.) You should think about how to revise your views to remove the contradiction. 
         </div>
       </div>
 

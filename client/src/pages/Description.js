@@ -59,14 +59,14 @@ function Description() {
          <h2>Honor code</h2>
 
       In all of their assignments, students are responsible for compliance
-      with the University's honor code, information about which is available <a href="http://honorcode.nd.edu/" target="_blank">here</a>. You should
+      with the University's honor code, information about which is available <a href="http://honorcode.nd.edu/" target="_blank" rel="noopener noreferrer">here</a>. You should
       acquaint yourself with the policies and penalties described there.<br /><br />
 
       Sometimes, it can be hard to know what, exactly, the honor code implies
       with respect to different disciplines. For this reason, the philosophy
       department has prepared a document explaining, using examples, what the
       honor code requires of students when writing a philosophy paper. I
-      strongly recommend that you read this document, which is available <a href="http://www3.nd.edu/~jspeaks/_format/sitewide_files/philohonorcode.pdf" target="_blank">here</a>. It is
+      strongly recommend that you read this document, which is available <a href="http://www3.nd.edu/~jspeaks/_format/sitewide_files/philohonorcode.pdf" target="_blank" rel="noopener noreferrer">here</a>. It is
       possible to violate the honor code without intending to do so;
       the best way to avoid this is to carefully read through the philosophy
       department's guidelines. <br /><br />
@@ -117,7 +117,7 @@ function Description() {
       topics we're discussing further. You can always get in touch with me by
       posting to the "Ask a TA or Prof" channel on Slack, and this often the easiest
       route if you just have a quick question about the readings or
-      assignments. You can book a time to meet with me <a href="https://calendly.com/jspeaks/office-hours" target="blank">here</a>. If none of the listed times work for you, just let me know and we will figure out a time that does work.<br /><br />
+      assignments. You can book a time to meet with me <a href="https://calendly.com/jspeaks/office-hours" target="blank" rel="noopener noreferrer">here</a>. If none of the listed times work for you, just let me know and we will figure out a time that does work.<br /><br />
 
       The teaching assistants do most of the grading
       for the course, hold office hours, and are in general available outside

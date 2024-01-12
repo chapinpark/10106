@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import ResetPassword from './ResetPassword'; // Adjust the path as needed
 import LoginInstructions from './LoginInstructions';
+import './LoginForm.css';
 
 function LoginForm({ onLoginSuccess }) {
   const { handleLogin } = useContext(AuthContext);
@@ -45,7 +46,7 @@ function LoginForm({ onLoginSuccess }) {
       />
       ) : (
           <div>
-            <LoginInstructions /> {/* gives instrictions for first time visitors */}
+            <LoginInstructions /> {/* gives instructions for first time visitors */}
         <form onSubmit={handleSubmit}>
           <label>
             Username: 
@@ -53,6 +54,7 @@ function LoginForm({ onLoginSuccess }) {
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              autoFocus  // This attribute will focus the input field on page load
             />
           </label><br></br>
           <label>
@@ -63,7 +65,7 @@ function LoginForm({ onLoginSuccess }) {
               onChange={(e) => setPassword(e.target.value)}
             />
           </label>
-          <button type="submit">Login</button>
+          <button className="loginButton" type="submit">LOGIN</button>
           {errorMessage && <p>{errorMessage}</p>}
             </form>
             </div>

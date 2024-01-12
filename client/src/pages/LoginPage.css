@@ -1,0 +1,8 @@
+.loginContainer{
+    background-color: white;
+    box-shadow: var(--standard-box-shadow);
+    padding: 10px;
+    margin-top: 25px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
