@@ -12,7 +12,7 @@ function LongAnswerQuestion({ questionId, questionText }) {
 
   return (
     <div className='questionContainer'>
-      <p>{questionText}</p>
+      <p className='questionText'>{questionText}</p>
       <AnswerTextArea 
         columnName={questionId} 
         onChange={handleChange}

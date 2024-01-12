@@ -17,7 +17,7 @@ function RadioQuestion({ questionId, questionText, questionOptions, selectedAnsw
 
   return (
     <div className='questionContainer'>
-      <p>{questionText}</p>
+      <p className='questionText'>{questionText}</p>
             <div className='optionsContainer'>
       {questionOptions.map((option, index) => (
         <label key={index} className={getButtonClass(index)}>

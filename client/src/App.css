@@ -116,6 +116,7 @@ h2{
   flex-direction: column; /* Stack buttons vertically */
   align-items: flex-end; /* Align buttons to the right */
   padding-top: 60px;
+  z-index: 9;
   /* Additional styling */
 
 }

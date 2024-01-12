@@ -6,7 +6,7 @@ function Contradiction({ questionId, questionText }) {
 
   return (
     <div className='questionContainer contradictionContainer'>
-      <p>{questionText}</p>
+      <p className='questionText'>{questionText}</p>
     </div>
   );
 }
