@@ -14,19 +14,19 @@ function MainMenu({ onMenuSelect, isSmallScreen }) {
         className={activeButton === 'description' ? 'selectedButton' : ''}
         onClick={() => handleClick('description')}
       >
-        course description
+        {isSmallScreen ? 'desc' : 'course description'}
       </button>
       <button
         className={activeButton === 'syllabus' ? 'selectedButton' : ''}
         onClick={() => handleClick('syllabus')}
       >
-        schedule
+        {isSmallScreen ? 'sched' : 'schedule'}
       </button>
       <button
         className={activeButton === 'myphi' ? 'selectedButton' : ''}
         onClick={() => handleClick('myphi')}
       >
-        my philosophy
+        {isSmallScreen ? 'myphi' : 'my philosophy'}
       </button>
 
       {!isSmallScreen && ( // does not render in small screen
