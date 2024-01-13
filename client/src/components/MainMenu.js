@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
-function MainMenu({ onMenuSelect }) {
+function MainMenu({ onMenuSelect, isSmallScreen }) {
   const [activeButton, setActiveButton] = useState(null);
 
   const handleClick = (buttonId) => {
     setActiveButton(buttonId);
     onMenuSelect(buttonId);
   };
-
+  
   return (
     <div className="menu">
       <button
@@ -28,12 +28,15 @@ function MainMenu({ onMenuSelect }) {
       >
         my philosophy
       </button>
-     <button
+
+      {!isSmallScreen && ( // does not render in small screen
+        <button
     className={activeButton === 'slack' ? 'selectedButton' : ''}
     onClick={() => window.open('https://philo1016.slack.com/', '_blank')}
->
-    slack
+>slack
 </button>
+      )}
+     
 
     </div>
   );

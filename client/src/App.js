@@ -21,11 +21,15 @@ function App() {
     // State to manage the menu open/close
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 769);
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 600);
+
+
 
     // Function to update the state based on window width
   useEffect(() => {
     const handleResize = () => {
       setIsLargeScreen(window.innerWidth >= 1300);
+      setIsSmallScreen(window.innerWidth <= 600);
     };
 
     // Add event listener
@@ -108,7 +112,7 @@ function App() {
 
 
 
-                <MainMenu onMenuSelect={handleMenuSelect} />
+                <MainMenu isSmallScreen={isSmallScreen} onMenuSelect={handleMenuSelect} />
               </div>
               <div className="container-below-top-nav">
                    
