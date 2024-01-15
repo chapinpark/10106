@@ -4,6 +4,7 @@ import { freeWillQuestions } from '../questions/freeWillQuestions';
 import { personalIdentityQuestions } from '../questions/personalIdentityQuestions';
 import { beliefQuestions } from '../questions/beliefQuestions';
 import { ethicsQuestions } from '../questions/ethicsQuestions';
+import Papa from 'papaparse'; // for csv files
 
 const AdminPage = () => {
   const [password, setPassword] = useState('');
@@ -67,14 +68,64 @@ const [fullName, setFullName] = useState('');
   }
 };
 
+  // code for uploading csv files
+  
+   const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    parseCsv(file);
+  };
 
+  const parseCsv = (file) => {
+    Papa.parse(file, {
+      header: true,
+      complete: (results) => {
+        console.log('Parsed CSV:', results.data);
+        handleAddUsers(results.data); // Pass the parsed data for bulk upload
+      },
+      error: (error) => console.error('Error parsing CSV:', error)
+    });
+  };
+
+const handleAddUsers = async (users) => {
+  try {
+    const apiUrl = process.env.REACT_APP_API_BASE_URL;
+    const response = await fetch(`${apiUrl}/api/add-users`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(users)
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to add users');
+    }
+    console.log('Users added successfully');
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ // return if not logged in 
+  
   if (!loggedIn) {
     return (
       <div>
         <h2>Admin Login</h2>
         <input
           type="password"
-          value={password}
+          value={password} 
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Enter password"
         />
@@ -82,6 +133,11 @@ const [fullName, setFullName] = useState('');
       </div>
     );
   }
+
+
+
+// return if logged in
+
 
   return (
     <div >
@@ -107,7 +163,10 @@ const [fullName, setFullName] = useState('');
   <button onClick={handleAddUser}>Add User</button>
 </div>
 
-      {/* ... other component code ... */}
+      <div>
+        <h2>Upload Users CSV (must have netid and fullname columns) </h2>
+        <input type="file" onChange={handleFileUpload} accept=".csv" />
+      </div>
     </div>
   );
 };

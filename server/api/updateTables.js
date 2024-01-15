@@ -96,6 +96,41 @@ router.post('/add-user', async (req, res) => {
   }
 });
 
+// for bulk addition of users from csv file
+
+router.post('/add-users', async (req, res) => {
+  const users = req.body; // Expecting an array of user objects
+
+  try {
+    for (const user of users) {
+      const { netid, fullName } = user;
+
+      // Insert into 'studentdata' table
+      let query = 'INSERT INTO studentdata (username, password, fullname) VALUES (?, ?, ?)';
+      await poolPromise.query(query, [netid, netid, fullName]); // Assuming password is same as netid, adjust as needed
+
+      // Insert into other tables
+      const tables = ['God', 'FreeWill', 'PersonalIdentity', 'Belief', 'Ethics'];
+      for (const table of tables) {
+        query = `INSERT INTO ${table} (username) VALUES (?)`;
+        await poolPromise.query(query, [netid]);
+      }
+
+      /* 
+      If you want to use dynamic table names and insertion, uncomment and adjust this section
+      const [tables] = await poolPromise.query('SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = \'your_database_name\' AND TABLE_NAME != \'studentdata\'');
+      for (const tableObj of tables) {
+        query = `INSERT INTO ?? (username) VALUES (?)`;
+        await poolPromise.query(query, [tableObj.TABLE_NAME, netid]);
+      }
+      */
+    }
+    res.status(200).json({ message: 'Users added successfully' });
+  } catch (error) {
+    console.error('Error adding users:', error);
+    res.status(500).json({ message: 'Error adding users', error });
+  }
+});
 
 
 module.exports = router;
