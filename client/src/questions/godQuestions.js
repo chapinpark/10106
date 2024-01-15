@@ -10,7 +10,7 @@ export const godQuestions = (answers, classDay, theses) => [
     questionType: "Radio",
     questionText: "Is the kalam argument sound?",
     questionOptions: ["Yes", "No"],
-    questionCondition: (answers, classDay) => classDay >= 0
+    questionCondition: (answers, classDay) => classDay >= 2
   },
 
   {
