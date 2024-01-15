@@ -32,7 +32,7 @@ function MainMenu({ onMenuSelect, isSmallScreen }) {
       {!isSmallScreen && ( // does not render in small screen
         <button
     className={activeButton === 'slack' ? 'selectedButton' : ''}
-    onClick={() => window.open('https://philo1016.slack.com/', '_blank')}
+    onClick={() => window.open('https://phil10106workspace.slack.com/', '_blank')}
 >slack
 </button>
       )}

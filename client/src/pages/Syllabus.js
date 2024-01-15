@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import ClassInfoContext from '../context/ClassInfoContext'; // Adjust the path as necessary
+import './Syllabus.css';
+import readingsArray from '../utils/readings.js'; // Adjust the path as necessary
+import readingsIcon from '../icons/reading.png';
+
+
 
 //const color1 = "var(--color1)";
 const color2 = "var(--color2)";
 const color1 = "var(--color1)";
 
 const Syllabus = () => {
+  // current classDay 
+const { classDay } = useContext(ClassInfoContext); // Use the context object, not the provider
+
   // Function to calculate class dates
   const getClassDates = (startDate, endDate) => {
     const start = new Date(startDate);
@@ -21,6 +30,35 @@ const Syllabus = () => {
     return dates;
   };
 
+// logic for readings
+
+  const findReadingsForLectureDay = (lectureDay) => {
+  return readingsArray.filter(reading => reading.day === lectureDay);
+};
+
+  const Readings = ({ lectureDay }) => {
+  const readings = findReadingsForLectureDay(lectureDay);
+
+  return (
+    <div>
+      {readings.map((reading, index) => (
+        <div className="readingContainer" key={index}>
+          <p className="readingText">{reading.text}</p>
+          <p className="readingSource"> -- {reading.source}</p>
+        </div>
+      ))}
+    </div>
+  );
+  };
+  
+  const [selectedLectureDay, setSelectedLectureDay] = useState(null);
+  
+  // If classDay can change and you want to update the readings accordingly
+useEffect(() => {
+  setSelectedLectureDay(classDay);
+}, [classDay]);
+
+  
   // Format date as "Month day"
   const formatDate = (date) => {
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
@@ -32,38 +70,39 @@ const Syllabus = () => {
   // Create a placeholder topics array
   // Manually define the topics array
 const topics = [
-  "What is philosophy?",
-  "The first cause argument",
-  "The cosmological argument",
-  "The fine-tuning argument",
-  "The argument from evil",
-  "The free will defense",
-  "Evil and life after death",
-  "Discussion day",
-  "Free will vs. fate",
-  "Free will vs. determinism",
-  "Free will vs. science",
-  "Discussion day",
-  "Identity and survival",
-  "Consciousness and immaterial souls",
-  "Puzzles of survival",
-  "Survival and immortality",
-  "Spring break",
-  "Spring break",
-  "Discussion day",
-  "Should I believe without certainty?",
-  "Should I believe without evidence?",
-  "Should I believe what will make me happy?",
-  "Discussion day",
-  "[class canceled]",
-  "Is morality real and is it relative?",
-  "Right and wrong, good and bad",
-  "TBA",
-  "What is justice?",
-  "Discussion day",
-  "Concluding lecture",
-  "[My Philosophy discussions]"
+  { title: "What is philosophy?", lectureDay: 1 },
+  { title: "The first cause argument", lectureDay: 2 },
+  { title: "The cosmological argument", lectureDay: 3 },
+  { title: "The fine-tuning argument", lectureDay: 4 },
+  { title: "The argument from evil", lectureDay: 5 },
+  { title: "The free will defense", lectureDay: 6 },
+  { title: "Evil and life after death", lectureDay: 7 },
+  { title: "Discussion day" },
+  { title: "Free will vs. fate", lectureDay: 8 },
+  { title: "Free will vs. determinism", lectureDay: 9 },
+  { title: "Free will vs. science", lectureDay: 10 },
+  { title: "Discussion day",  },
+  { title: "Identity and survival", lectureDay: 11 },
+  { title: "Consciousness and immaterial souls", lectureDay: 12 },
+  { title: "Puzzles of survival", lectureDay: 13 },
+  { title: "Survival and immortality", lectureDay: 14 },
+  { title: "Spring break",  },
+  { title: "Spring break",  },
+  { title: "Discussion day",  },
+  { title: "Should I believe without certainty?", lectureDay: 15 },
+  { title: "Should I believe without evidence?", lectureDay: 16 },
+  { title: "Should I believe what will make me happy?", lectureDay: 17 },
+  { title: "Discussion day",  },
+  { title: "[class canceled]",  },
+  { title: "Is morality real? Is it relative?", lectureDay: 18 },
+  { title: "Right and wrong, good and bad", lectureDay: 19 },
+  { title: "TBA",  },
+  { title: "What is justice?", lectureDay: 20 },
+  { title: "Discussion day", },
+  { title: "Concluding lecture",  },
+  { title: "[My Philosophy discussions]",  }
 ];
+
 
 
   // Styles to center the table and stack elements vertically
@@ -85,8 +124,10 @@ const topics = [
     { name: "Do I have free will?", duration: 4, color: color1 },
     { name: "What am I?", duration: 7, color: color2 },
     { name: "What should I believe?", duration: 5, color: color1 },
-    { name: "How should I live?", duration: 5, color: color2},
+    { name: "How should I live?", duration: 7, color: color2},
   ];
+
+
 
   // Function to generate table rows with merged cells for sections
  const generateTableRows = (classDates, topics, sections) => {
@@ -103,37 +144,65 @@ const topics = [
     // Check if we're within a valid section
     if (sectionIndex < sections.length) {
       let isFirstDayOfSection = dayCount === sections[sectionIndex].duration;
-      let sectionCellStyle = isFirstDayOfSection ? {
+      let combinedSectionStyle = isFirstDayOfSection ? {
         borderRight: `30px solid ${sections[sectionIndex].color}`,
         color: sections[sectionIndex].color,
         verticalAlign: 'middle',
-        lineHeight: `${dayCount * 20}px` // Adjust line height based on the number of rows
+        lineHeight: `${dayCount * 20}px`
       } : {};
 
+      const topic = topics[index];
       rows.push(
         <tr key={index}>
           {isFirstDayOfSection && (
-            <td rowSpan={sections[sectionIndex].duration} style={sectionCellStyle}>
+            <td rowSpan={sections[sectionIndex].duration} style={combinedSectionStyle}>
               {sections[sectionIndex].name}
             </td>
           )}
           <td>{formatDate(date)}</td>
-          <td>{topics[index]}</td>
+          <td className="topic-cell">
+            {topic.title}
+            {/* Render the link only if lectureDay is available */}
+            {topic.lectureDay && (
+<a
+  href="/readings" /* A valid address, but it will not be navigated to */
+  onClick={(e) => {
+    e.preventDefault();
+    setSelectedLectureDay(topic.lectureDay);
+  }}
+>
+  <img src={readingsIcon} alt="Readings" className="syllabusIcon" />
+</a>
+            )}
+          </td>
         </tr>
       );
 
-      // Decrease dayCount and move to the next section if needed
       dayCount--;
       if (dayCount === 0) {
         sectionIndex++;
       }
     } else {
-      // If there are no more sections, just fill in the dates and topics
+      const topic = topics[index];
       rows.push(
         <tr key={index}>
           <td></td>
           <td>{formatDate(date)}</td>
-          <td>{topics[index]}</td>
+          <td className="topic-cell">
+            {topic.title}
+            {/* Render the link only if lectureDay is available */}
+            {topic.lectureDay && (
+            <a
+  href="/readings" /* A valid address, but it will not be navigated to */
+  onClick={(e) => {
+    e.preventDefault();
+    setSelectedLectureDay(topic.lectureDay);
+  }}
+>
+  <img src={readingsIcon} alt="Readings" className="syllabusIcon" />
+</a>
+            )}
+          </td>
         </tr>
       );
     }
@@ -141,6 +210,11 @@ const topics = [
 
   return rows;
 };
+
+
+
+  // ... rest of your component, including the render method ...
+
 
 
   return (
@@ -151,6 +225,10 @@ const topics = [
           {generateTableRows(classDates, topics, sections)}
         </tbody>
       </table>
+
+      <h1>Readings</h1>
+            {selectedLectureDay && <Readings lectureDay={selectedLectureDay} />}
+
     </div>
   );
 };

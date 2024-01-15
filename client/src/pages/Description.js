@@ -96,7 +96,7 @@ function Description() {
     </li>
   </ul>
 
-    If your grade on the end of semester evaluation is higher than on the mid-semester evaluation, then the weighting of the two will be 20%/65% rather than 40%/45%.<br /><br />
+    If your grade on the end of semester evaluation is higher than on the mid-semester evaluation, then the weighting of the two will be 25%/60% rather than 40%/45%.<br /><br />
         
 
     Participation in the class will be evaluated in three main ways: (1)
