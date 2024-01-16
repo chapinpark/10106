@@ -3,6 +3,8 @@ import ClassInfoContext from '../context/ClassInfoContext'; // Adjust the path a
 import './Syllabus.css';
 import readingsArray from '../utils/readings.js'; // Adjust the path as necessary
 import readingsIcon from '../icons/reading.png';
+import pdfIcon from '../icons/pdf.png';
+import lectureIcon from '../icons/lecture.png';
 
 
 
@@ -10,9 +12,11 @@ import readingsIcon from '../icons/reading.png';
 const color2 = "var(--color2)";
 const color1 = "var(--color1)";
 
+
 const Syllabus = () => {
   // current classDay 
 const { classDay } = useContext(ClassInfoContext); // Use the context object, not the provider
+ const [selectedLectureDay, setSelectedLectureDay] = useState(null);
 
   // Function to calculate class dates
   const getClassDates = (startDate, endDate) => {
@@ -34,11 +38,13 @@ const { classDay } = useContext(ClassInfoContext); // Use the context object, no
   
     const readingsRef = useRef(null); // Reference for the readings header for scroll action
 
-  const handleReadingClick = (lectureDay) => {
+const handleReadingClick = (lectureDay) => {
   setSelectedLectureDay(lectureDay);
-  readingsRef.current.scrollIntoView({ behavior: 'smooth' });
+  // Wait for the state to update and new content to render
+  setTimeout(() => {
+    readingsRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 0);
 };
-
 
 
 const Readings = ({ lectureDay }) => {
@@ -54,7 +60,7 @@ const Readings = ({ lectureDay }) => {
 };
 
   
-  const [selectedLectureDay, setSelectedLectureDay] = useState(null);
+ 
   
   // If classDay can change and you want to update the readings accordingly
 useEffect(() => {
@@ -133,7 +139,7 @@ const topics = [
 
 
   // Function to generate table rows with merged cells for sections
- const generateTableRows = (classDates, topics, sections) => {
+const generateTableRows = (classDates, topics, sections) => {
   let rows = [];
   let sectionIndex = 0;
   let dayCount = 0;
@@ -158,32 +164,44 @@ const topics = [
       rows.push(
         <tr key={index}>
           {isFirstDayOfSection && (
-            <td rowSpan={sections[sectionIndex].duration} style={combinedSectionStyle}>
+            <td className='section-cell' rowSpan={sections[sectionIndex].duration} style={combinedSectionStyle}>
               {sections[sectionIndex].name}
             </td>
           )}
           <td>{formatDate(date)}</td>
           <td className="topic-cell">
             {topic.title}
-            {/* Render the link only if lectureDay is available */}
+            {/* Render reading link if lectureDay is available */}
             {topic.lectureDay && (
-
               <a href="#" onClick={(e) => {
-  e.preventDefault();
-  handleReadingClick(topic.lectureDay);
-}}>
-  <img src={readingsIcon} alt="Readings" className="syllabusIcon" />
-</a>
+                e.preventDefault();
+                handleReadingClick(topic.lectureDay);
+              }}>
+                <img src={readingsIcon} alt="Readings" className="syllabusIcon" />
+              </a>
+            )}
+            {/* Render lecture and PDF links if lectureDay is less than or equal to classDay */}
+            {topic.lectureDay && topic.lectureDay < classDay && (
+              <>
+                <a href={`https://www3.nd.edu/~jspeaks/courses/10106/${topic.lectureDay}/index.html#0`} target="_blank" rel="noopener noreferrer">
+                  <img src={lectureIcon} alt="Lecture" className="syllabusIcon" />
+                </a>
+                <a href={`https://www3.nd.edu/~jspeaks/courses/10106/${topic.lectureDay}.pdf`} target="_blank" rel="noopener noreferrer">
+                  <img src={pdfIcon} alt="PDF" className="syllabusIcon" />
+                </a>
+              </>
             )}
           </td>
         </tr>
       );
 
+      // Decrease dayCount and move to the next section if needed
       dayCount--;
       if (dayCount === 0) {
         sectionIndex++;
       }
     } else {
+      // If there are no more sections, just fill in the dates and topics
       const topic = topics[index];
       rows.push(
         <tr key={index}>
@@ -191,17 +209,26 @@ const topics = [
           <td>{formatDate(date)}</td>
           <td className="topic-cell">
             {topic.title}
-            {/* Render the link only if lectureDay is available */}
+            {/* Render the links only if lectureDay is available */}
             {topic.lectureDay && (
-            <a
-  href="/readings" /* A valid address, but it will not be navigated to */
-  onClick={(e) => {
-    e.preventDefault();
-    setSelectedLectureDay(topic.lectureDay);
-  }}
->
-  <img src={readingsIcon} alt="Readings" className="syllabusIcon" />
-</a>
+              <>
+                <a href="#" onClick={(e) => {
+                  e.preventDefault();
+                  handleReadingClick(topic.lectureDay);
+                }}>
+                  <img src={readingsIcon} alt="Readings" className="syllabusIcon" />
+                </a>
+                {topic.lectureDay <= classDay && (
+                  <>
+                    <a href={`https://www3.nd.edu/~jspeaks/courses/10106/${topic.lectureDay}/index.html#0`} target="_blank" rel="noopener noreferrer">
+                      <img src={lectureIcon} alt="Lecture" className="syllabusIcon" />
+                    </a>
+                    <a href={`https://www3.nd.edu/~jspeaks/courses/10106/${topic.lectureDay}.pdf`} target="_blank" rel="noopener noreferrer">
+                      <img src={pdfIcon} alt="PDF" className="syllabusIcon" />
+                    </a>
+                  </>
+                )}
+              </>
             )}
           </td>
         </tr>
