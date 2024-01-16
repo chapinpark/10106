@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import ClassInfoContext from '../context/ClassInfoContext'; // Adjust the path as necessary
 import './Syllabus.css';
 import readingsArray from '../utils/readings.js'; // Adjust the path as necessary
@@ -30,7 +30,14 @@ const { classDay } = useContext(ClassInfoContext); // Use the context object, no
     return dates;
   };
 
-// logic for readings
+  // logic for readings
+  
+    const readingsRef = useRef(null); // Reference for the readings header for scroll action
+
+  const handleReadingClick = (lectureDay) => {
+  setSelectedLectureDay(lectureDay);
+  readingsRef.current.scrollIntoView({ behavior: 'smooth' });
+};
 
   const findReadingsForLectureDay = (lectureDay) => {
   return readingsArray.filter(reading => reading.day === lectureDay);
@@ -164,13 +171,11 @@ const topics = [
             {topic.title}
             {/* Render the link only if lectureDay is available */}
             {topic.lectureDay && (
-<a
-  href="/readings" /* A valid address, but it will not be navigated to */
-  onClick={(e) => {
-    e.preventDefault();
-    setSelectedLectureDay(topic.lectureDay);
-  }}
->
+
+              <a href="#" onClick={(e) => {
+  e.preventDefault();
+  handleReadingClick(topic.lectureDay);
+}}>
   <img src={readingsIcon} alt="Readings" className="syllabusIcon" />
 </a>
             )}
@@ -226,7 +231,7 @@ const topics = [
         </tbody>
       </table>
 
-      <h1>Readings</h1>
+      <h1 ref={readingsRef}>Readings</h1>
             {selectedLectureDay && <Readings lectureDay={selectedLectureDay} />}
 
     </div>
