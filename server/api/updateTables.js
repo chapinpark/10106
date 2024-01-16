@@ -101,9 +101,13 @@ router.post('/add-user', async (req, res) => {
 router.post('/add-users', async (req, res) => {
   const users = req.body; // Expecting an array of user objects
 
+  console.log('Received users for addition:', users);
+
   try {
     for (const user of users) {
       const { netid, fullName } = user;
+        console.log('Received users for addition:', users);
+
 
       // Insert into 'studentdata' table
       let query = 'INSERT INTO studentdata (username, password, fullname) VALUES (?, ?, ?)';

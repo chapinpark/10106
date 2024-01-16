@@ -75,20 +75,34 @@ const [fullName, setFullName] = useState('');
     parseCsv(file);
   };
 
-  const parseCsv = (file) => {
-    Papa.parse(file, {
-      header: true,
-      complete: (results) => {
-        console.log('Parsed CSV:', results.data);
-        handleAddUsers(results.data); // Pass the parsed data for bulk upload
-      },
-      error: (error) => console.error('Error parsing CSV:', error)
-    });
-  };
+const parseCsv = (file) => {
+  Papa.parse(file, {
+    header: true,
+    complete: (results) => {
+      const filteredUsers = results.data
+        .filter(user => user.netid && user.fullname)
+        .map(user => ({ netid: user.netid.trim(), fullname: user.fullname.trim() }));
+
+      if (filteredUsers.length !== results.data.length) {
+        console.error('Some rows were skipped due to missing netid or fullname');
+      }
+
+      console.log('Filtered and Validated Users:', filteredUsers);
+      handleAddUsers(filteredUsers);
+    },
+    error: (error) => console.error('Error parsing CSV:', error)
+  });
+};
+
+
 
 const handleAddUsers = async (users) => {
   try {
     const apiUrl = process.env.REACT_APP_API_BASE_URL;
+
+  // Log the final data being sent to the backend
+    console.log('Sending the following data to backend:', users);
+
     const response = await fetch(`${apiUrl}/api/add-users`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
