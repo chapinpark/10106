@@ -39,24 +39,20 @@ const { classDay } = useContext(ClassInfoContext); // Use the context object, no
   readingsRef.current.scrollIntoView({ behavior: 'smooth' });
 };
 
-  const findReadingsForLectureDay = (lectureDay) => {
-  return readingsArray.filter(reading => reading.day === lectureDay);
-};
 
-  const Readings = ({ lectureDay }) => {
-  const readings = findReadingsForLectureDay(lectureDay);
+
+const Readings = ({ lectureDay }) => {
+  const readingComponents = readingsArray.find(reading => reading.day === lectureDay)?.components;
 
   return (
     <div>
-      {readings.map((reading, index) => (
-        <div className="readingContainer" key={index}>
-          <p className="readingText">{reading.text}</p>
-          <p className="readingSource"> -- {reading.source}</p>
-        </div>
-      ))}
+      {readingComponents 
+        ? readingComponents.map((ReadingComponent, index) => <ReadingComponent key={index} />)
+        : <p>No readings for this day.</p>}
     </div>
   );
-  };
+};
+
   
   const [selectedLectureDay, setSelectedLectureDay] = useState(null);
   
