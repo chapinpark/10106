@@ -105,13 +105,13 @@ router.post('/add-users', async (req, res) => {
 
   try {
     for (const user of users) {
-      const { netid, fullName } = user;
+      const { netid, fullname } = user;
         console.log('Received users for addition:', users);
 
 
       // Insert into 'studentdata' table
       let query = 'INSERT INTO studentdata (username, password, fullname) VALUES (?, ?, ?)';
-      await poolPromise.query(query, [netid, netid, fullName]); // Assuming password is same as netid, adjust as needed
+      await poolPromise.query(query, [netid, netid, fullname]);
 
       // Insert into other tables
       const tables = ['God', 'FreeWill', 'PersonalIdentity', 'Belief', 'Ethics'];
@@ -119,15 +119,6 @@ router.post('/add-users', async (req, res) => {
         query = `INSERT INTO ${table} (username) VALUES (?)`;
         await poolPromise.query(query, [netid]);
       }
-
-      /* 
-      If you want to use dynamic table names and insertion, uncomment and adjust this section
-      const [tables] = await poolPromise.query('SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = \'your_database_name\' AND TABLE_NAME != \'studentdata\'');
-      for (const tableObj of tables) {
-        query = `INSERT INTO ?? (username) VALUES (?)`;
-        await poolPromise.query(query, [tableObj.TABLE_NAME, netid]);
-      }
-      */
     }
     res.status(200).json({ message: 'Users added successfully' });
   } catch (error) {
