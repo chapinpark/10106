@@ -47,7 +47,7 @@ const handleReadingClick = (lectureDay) => {
 };
 
 
-const Readings = ({ lectureDay }) => {
+  const Readings = ({ lectureDay }) => {
   const readingComponents = readingsArray.find(reading => reading.day === lectureDay)?.components;
 
   return (
@@ -181,7 +181,7 @@ const generateTableRows = (classDates, topics, sections) => {
               </a>
             )}
             {/* Render lecture and PDF links if lectureDay is less than or equal to classDay */}
-            {topic.lectureDay && topic.lectureDay < classDay && (
+            {topic.lectureDay && topic.lectureDay <= classDay && (
               <>
                 <a href={`https://www3.nd.edu/~jspeaks/courses/10106/${topic.lectureDay}/index.html#0`} target="_blank" rel="noopener noreferrer">
                   <img src={lectureIcon} alt="Lecture" className="syllabusIcon" />
