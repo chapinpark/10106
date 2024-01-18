@@ -61,12 +61,17 @@ const handleReadingClick = (lectureDay) => {
 
   
  
-  
-  // If classDay can change and you want to update the readings accordingly
 useEffect(() => {
-  setSelectedLectureDay(classDay);
-}, [classDay]);
+  // Ensure that the new default reading does not exceed the total number of lecture days
+  const totalLectureDays = topics.reduce((acc, topic) => {
+    return topic.lectureDay ? acc + 1 : acc;
+  }, 0);
 
+  // Set the selectedLectureDay to classDay + 1 or the last lecture day, whichever is smaller
+  const newDefaultReadingDay = Math.min(classDay + 1, totalLectureDays);
+  
+  setSelectedLectureDay(newDefaultReadingDay);
+}, [classDay]);
   
   // Format date as "Month day"
   const formatDate = (date) => {
