@@ -4,6 +4,7 @@ import { freeWillQuestions } from '../questions/freeWillQuestions';
 import { personalIdentityQuestions } from '../questions/personalIdentityQuestions';
 import { beliefQuestions } from '../questions/beliefQuestions';
 import { ethicsQuestions } from '../questions/ethicsQuestions';
+import './AdminPage.css';
 import Papa from 'papaparse'; // for csv files
 
 const AdminPage = () => {
@@ -133,20 +134,29 @@ const handleAddUsers = async (users) => {
   
  // return if not logged in 
   
-  if (!loggedIn) {
-    return (
-      <div>
-        <h2>Admin Login</h2>
+if (!loggedIn) {
+  return (
+    <div className='adminContainer'>
+      <h1>Admin Login</h1>
+      <form onSubmit={(e) => {
+        e.preventDefault(); // Prevent the default form submission
+        handleLogin(); // Invoke the login handler
+      }}>
         <input
           type="password"
-          value={password} 
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Enter password"
+          // Optional: Automatically focus this input when the component loads
+          autoFocus 
         />
-        <button onClick={handleLogin}>Login</button>
-      </div>
-    );
-  }
+        <br/>
+        <button type="submit">Login</button>
+      </form>
+    </div>
+  );
+}
+
 
 
 
@@ -154,14 +164,15 @@ const handleAddUsers = async (users) => {
 
 
   return (
-    <div >
+    <div className='adminContainer'>
       <h1>Admin Page</h1>
       
+      <div>
+      <h3>Add all tables in question files to the database</h3>  <button onClick={handleUpdateAllTables}>Update All Tables</button>
+      </div>
       
-      Add all tables in question files to the database:  <button onClick={handleUpdateAllTables}>Update All Tables</button>
-
 <div>
-  <h2>Add New User</h2>
+  <h3>Add New User</h3>
   <input
     type="text"
     value={netid}
@@ -173,14 +184,20 @@ const handleAddUsers = async (users) => {
     value={fullName}
     onChange={(e) => setFullName(e.target.value)}
     placeholder="Enter Full Name"
-  />
+  /><br/>
   <button onClick={handleAddUser}>Add User</button>
+      </div>
+      
+      
+   <div>
+  <h3>Upload CSV of users (must have netid and fullname columns)</h3>
+  <label htmlFor="file-upload" className="custom-file-upload">
+    Upload CSV
+  </label>
+  <input id="file-upload" type="file" onChange={handleFileUpload} accept=".csv" style={{ display: 'none' }} />
 </div>
 
-      <div>
-        <h2>Upload Users CSV (must have netid and fullname columns) </h2>
-        <input type="file" onChange={handleFileUpload} accept=".csv" />
-      </div>
+
     </div>
   );
 };

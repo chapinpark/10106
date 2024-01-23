@@ -13,6 +13,42 @@ const color2 = "var(--color2)";
 const color1 = "var(--color1)";
 
 
+ // Manually define the topics array
+const topics = [
+  { title: "What is philosophy?", lectureDay: 1 },
+  { title: "The first cause argument", lectureDay: 2 },
+  { title: "The cosmological argument", lectureDay: 3 },
+  { title: "The fine-tuning argument", lectureDay: 4 },
+  { title: "The argument from evil", lectureDay: 5 },
+  { title: "The free will defense", lectureDay: 6 },
+  { title: "Evil and life after death", lectureDay: 7 },
+  { title: "Discussion day" },
+  { title: "Free will vs. fate", lectureDay: 8 },
+  { title: "Free will vs. determinism", lectureDay: 9 },
+  { title: "Free will vs. science", lectureDay: 10 },
+  { title: "Discussion day",  },
+  { title: "Identity and survival", lectureDay: 11 },
+  { title: "Consciousness and immaterial souls", lectureDay: 12 },
+  { title: "Puzzles of survival", lectureDay: 13 },
+  { title: "Survival and immortality", lectureDay: 14 },
+  { title: "Spring break",  },
+  { title: "Spring break",  },
+  { title: "Discussion day",  },
+  { title: "Should I believe without certainty?", lectureDay: 15 },
+  { title: "Should I believe without evidence?", lectureDay: 16 },
+  { title: "Should I believe what will make me happy?", lectureDay: 17 },
+  { title: "Discussion day",  },
+  { title: "[class canceled]",  },
+  { title: "Is morality real? Is it relative?", lectureDay: 18 },
+  { title: "Right and wrong, good and bad", lectureDay: 19 },
+  { title: "TBA",  },
+  { title: "What is justice?", lectureDay: 20 },
+  { title: "Discussion day", },
+  { title: "Concluding lecture",  },
+  { title: "[My Philosophy discussions]",  }
+];
+
+
 const Syllabus = () => {
   // current classDay 
 const { classDay } = useContext(ClassInfoContext); // Use the context object, not the provider
@@ -81,41 +117,8 @@ useEffect(() => {
   // Calculate class dates
   const classDates = getClassDates('2024-01-16', '2024-05-01');
 
-  // Create a placeholder topics array
-  // Manually define the topics array
-const topics = [
-  { title: "What is philosophy?", lectureDay: 1 },
-  { title: "The first cause argument", lectureDay: 2 },
-  { title: "The cosmological argument", lectureDay: 3 },
-  { title: "The fine-tuning argument", lectureDay: 4 },
-  { title: "The argument from evil", lectureDay: 5 },
-  { title: "The free will defense", lectureDay: 6 },
-  { title: "Evil and life after death", lectureDay: 7 },
-  { title: "Discussion day" },
-  { title: "Free will vs. fate", lectureDay: 8 },
-  { title: "Free will vs. determinism", lectureDay: 9 },
-  { title: "Free will vs. science", lectureDay: 10 },
-  { title: "Discussion day",  },
-  { title: "Identity and survival", lectureDay: 11 },
-  { title: "Consciousness and immaterial souls", lectureDay: 12 },
-  { title: "Puzzles of survival", lectureDay: 13 },
-  { title: "Survival and immortality", lectureDay: 14 },
-  { title: "Spring break",  },
-  { title: "Spring break",  },
-  { title: "Discussion day",  },
-  { title: "Should I believe without certainty?", lectureDay: 15 },
-  { title: "Should I believe without evidence?", lectureDay: 16 },
-  { title: "Should I believe what will make me happy?", lectureDay: 17 },
-  { title: "Discussion day",  },
-  { title: "[class canceled]",  },
-  { title: "Is morality real? Is it relative?", lectureDay: 18 },
-  { title: "Right and wrong, good and bad", lectureDay: 19 },
-  { title: "TBA",  },
-  { title: "What is justice?", lectureDay: 20 },
-  { title: "Discussion day", },
-  { title: "Concluding lecture",  },
-  { title: "[My Philosophy discussions]",  }
-];
+ 
+ 
 
 
 
@@ -178,6 +181,7 @@ const generateTableRows = (classDates, topics, sections) => {
             {topic.title}
             {/* Render reading link if lectureDay is available */}
             {topic.lectureDay && (
+              // eslint-disable-next-line
               <a href="#" onClick={(e) => {
                 e.preventDefault();
                 handleReadingClick(topic.lectureDay);
@@ -217,6 +221,7 @@ const generateTableRows = (classDates, topics, sections) => {
             {/* Render the links only if lectureDay is available */}
             {topic.lectureDay && (
               <>
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                 <a href="#" onClick={(e) => {
                   e.preventDefault();
                   handleReadingClick(topic.lectureDay);
