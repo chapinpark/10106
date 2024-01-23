@@ -130,7 +130,7 @@ export const godQuestions = (answers, classDay, theses) => [
   questionCondition: (answers) => showIf(answers, 'cosmologicalrejectedpremises', 4)
 },
 {
-  questionId: "psr-determinism",
+  questionId: "doespsrimplydeterminism",
   questionType: "Radio",
   questionText: "So you must think that the principle of sufficient reason is true. Determinism is the thesis that every event is determined by (i) the prior state of the world and (ii) the laws of nature. If the PSR is true, then every event has an explanation. But it looks like an explanation of an event would have to be given in terms of the prior state of the world and the laws of nature. So, it seems, if every event has an explanation (as the PSR says) then every event must be determined by the prior state of the world and the laws of nature. So, because you accept the PSR, it looks like you also must endorse determinism. Do you agree?",
   questionOptions: ["Yes, I think that determinism is true", "No, I don't think that determinism is true"],
@@ -140,7 +140,7 @@ export const godQuestions = (answers, classDay, theses) => [
   questionId: "psrwithoutdeterminism",
   questionType: "LongAnswer",
   questionText: "Then explain what is wrong with the preceding argument. How could the PSR be true without determinism being true?",
-  questionCondition: (answers) => showIf(answers, 'psr-determinism', 2)
+  questionCondition: (answers) => showIf(answers, 'doespsrimplydeterminism', 2)
 },
 {
   questionId: "collapsequestion",
