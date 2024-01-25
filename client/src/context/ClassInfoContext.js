@@ -4,7 +4,7 @@ const ClassInfoContext = createContext();
 
 export const ClassInfoProvider = ({ children }) => {
   // Set initial values for classDay and classSection
-  const [classDay, setClassDay] = useState(3); // Assuming classDay initially is 1
+  const [classDay, setClassDay] = useState(4); // Assuming classDay initially is 1
   const [classSection, setClassSection] = useState(1); // Assuming initial section
 
   const value = {
