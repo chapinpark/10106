@@ -658,7 +658,7 @@ export const godQuestions = (answers, classDay, theses) => [
     "I'm a quasi-theist",
     "I'm an agnostic. I don't believe any of these views because I can't decide which is true.",
   ],
-  questionCondition: (answers, classDay, theses) => showIf(answers, "nosoundarguments", 2) || theses["soundargumentagainsttheism"] === 1,
+  questionCondition: (answers, classDay, theses) => classDay >=7 && (showIf(answers, "nosoundarguments", 2) || theses["soundargumentagainsttheism"] === 1),
 },
 {
   questionId: "atheismrejectallarguments",
