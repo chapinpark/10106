@@ -6,6 +6,8 @@ import { beliefQuestions } from '../questions/beliefQuestions';
 import { ethicsQuestions } from '../questions/ethicsQuestions';
 import './AdminPage.css';
 import Papa from 'papaparse'; // for csv files
+import { useNavigate } from 'react-router-dom'; // for display of answers for puppeteer pdf
+
 
 const AdminPage = () => {
   const [password, setPassword] = useState('');
@@ -67,7 +69,19 @@ const [fullName, setFullName] = useState('');
   } catch (error) {
     console.error('Error:', error);
   }
+  };
+  
+
+  // code fo rvaigatiing tp full useranswers page (ultimately for pdf generation)
+  
+  const [testUsername, setTestUsername] = useState('');
+const navigate = useNavigate();
+
+const handleTestRoute = (e) => {
+  e.preventDefault(); // Prevent form submission from reloading the page
+  navigate(`/showAllAnswers/${testUsername}`); // Navigate to the test route
 };
+
 
   // code for uploading csv files
   
@@ -188,7 +202,19 @@ if (!loggedIn) {
   <button onClick={handleAddUser}>Add User</button>
       </div>
       
-      
+      <div>
+  <h3>Test User Answers Route</h3>
+  <form onSubmit={handleTestRoute}>
+    <input
+      type="text"
+      value={testUsername}
+      onChange={(e) => setTestUsername(e.target.value)}
+      placeholder="Enter username to test"
+    />
+    <button type="submit">Test Route</button>
+  </form>
+</div>
+
    <div>
   <h3>Upload CSV of users (must have netid and fullname columns)</h3>
   <label htmlFor="file-upload" className="custom-file-upload">

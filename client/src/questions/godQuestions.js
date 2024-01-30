@@ -17,7 +17,8 @@ export const godQuestions = (answers, classDay, theses) => [
     questionId: "defendkalam",
     questionType: "LongAnswer",
     questionText: "The kalam argument has as a premise that everything that begins to exist at some time must have a cause. Why do you think that that is true? Couldn't something just pop into existence, with no cause at all?",
-    questionCondition: (answers) => showIf(answers, 'iskalamsound', 1)
+    //questionCondition: (answers, classDay) => classDay >= 2
+     questionCondition: (answers) => showIf(answers, 'iskalamsound', 1)
     },
   {
   questionId: "whynoinfiniteseries",

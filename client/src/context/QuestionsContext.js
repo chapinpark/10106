@@ -6,6 +6,45 @@ import { createQuestionConditionMapping } from '../utils/createQuestionCondition
 import { transformAnswersToTheses } from '../utils/thesisTransformations';
 
 
+// Utility function to parse comma-separated answers; MC answers are stored as strings in database but converted to arrays for use in the answers state (for ordinary user use) and the allAnswers state (for pdf generation)
+
+ const parseCommaSeparatedAnswers = (commaSeparatedString) => {
+    return commaSeparatedString ? commaSeparatedString.split(',') : [];
+  };
+
+  // defines a function which fetches all answers for a user given as argument; needed in pdf generation process in the UserAnswers component.
+export const fetchAnswersForUser = async (username) => {
+  const apiUrl = process.env.REACT_APP_API_BASE_URL;
+  const tableNames = ['God', 'FreeWill', 'PersonalIdentity', 'Belief', 'Ethics'];
+  let allAnswers = {};
+
+  for (const tableName of tableNames) {
+    try {
+      const response = await fetch(`${apiUrl}/api/answers/${tableName}/${username}`);
+      if (response.ok) {
+        const data = await response.json();
+
+        // Flatten the structure by iterating over each row and extracting questionId and answers
+        data.forEach(row => {
+          Object.keys(row).forEach(questionId => {
+            // Check if the questionId is 'username', skip it as it's not an actual question
+            if (questionId !== 'username') {
+              allAnswers[questionId] = parseCommaSeparatedAnswers(row[questionId]);
+            }
+          });
+        });
+      } else {
+        console.error(`Error fetching data for table ${tableName}: ${response.statusText}`);
+      }
+    } catch (error) {
+      console.error(`Network error fetching data for table ${tableName}:`, error);
+    }
+  }
+  return allAnswers; // Return flattened all answers
+};
+
+
+
 
 export const QuestionsContext = createContext();
 
@@ -50,9 +89,7 @@ export const QuestionsProvider = ({ children }) => {
     debouncedSendUpdateToServer(questionId, newAnswer, tableName);
   };
 
-  const parseCommaSeparatedAnswers = (commaSeparatedString) => {
-    return commaSeparatedString ? commaSeparatedString.split(',') : [];
-  };
+ 
 
   useEffect(() => {
     const fetchAnswers = async (tableName) => {
@@ -88,6 +125,10 @@ useEffect(() => {
   setTheses(newTheses);
 }, [answers]);
 
+
+
+  
+  
   const questionConditionMapping = createQuestionConditionMapping(answers);
 
   return (

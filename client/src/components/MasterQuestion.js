@@ -11,34 +11,40 @@ import './MasterQuestion.css';
  
 // import other question components
 
-function MasterQuestion({ question }) {
-  const { answers, updateAnswer, theses } = useContext(QuestionsContext);
+function MasterQuestion({ question, answersData, isAdminMode = false }) {
+    console.log('MasterQuestion props', { question, answersData, isAdminMode });
+
+ const context = useContext(QuestionsContext); // Get the context
+  const { updateAnswer, theses } = context;
   const { questionId, questionType, questionText, questionOptions, questionCondition } = question;
   const { classDay } = useClassInfo();
- // console.log("Current classDay:", classDay);
 
+  // Determine which set of answers to use; in ordinary case based on the user's answers state, and in pdf generation given by argument allAnswers
+  const answersToRender = answersData || context.answers;
 
+console.log('answersToRender:', answersToRender);
   // Evaluate the condition to decide whether to render the question
-  const shouldRender = questionCondition ? questionCondition(answers,classDay,theses) : true;
+  const shouldRender = questionCondition ? questionCondition(answersToRender,classDay,theses) : true;
 
   // Side-effect to update the answer if the question should not be rendered
   // and if the question type is Radio or Checkbox
 useEffect(() => {
   const isRadioOrCheckbox = questionType === 'Radio' || questionType === 'Checkbox';
-  const currentAnswer = answers[questionId];
+  const currentAnswer = answersToRender[questionId];
   const shouldUpdate = !shouldRender && isRadioOrCheckbox && 
                        (!Array.isArray(currentAnswer) || currentAnswer.length !== 1 || currentAnswer[0] !== '0');
 
-  if (shouldUpdate) {
+  if (shouldUpdate && !isAdminMode) {
     updateAnswer(questionId, ['0']);
   }
-}, [shouldRender, answers, questionId, updateAnswer, questionType]);
+}, [shouldRender, answersToRender, questionId, updateAnswer, questionType, isAdminMode]);
 
 
+//console.log('Rendering with answers:', answersToRender);
 
   // Get the selected answers for this question
-  const selectedAnswers = answers[questionId];
-
+  const selectedAnswers = answersToRender[questionId];
+//console.log('selectedAnswers:', selectedAnswers);
   if (!shouldRender) return null;
 
   switch (questionType) {
@@ -48,7 +54,8 @@ useEffect(() => {
           questionId={questionId} 
           questionText={questionText} 
           questionOptions={questionOptions} 
-          selectedAnswers={selectedAnswers} />
+          selectedAnswers={selectedAnswers}
+        answersData={answersToRender}/>
       );
     case 'Checkbox':
       return (
@@ -56,14 +63,16 @@ useEffect(() => {
           questionId={questionId} 
           questionText={questionText} 
           questionOptions={questionOptions} 
-          selectedAnswers={selectedAnswers} />
+          selectedAnswers={selectedAnswers}
+        answersData={answersToRender}/>
       );
     case 'LongAnswer': 
       //console.log('LongAnswerQuestion:', questionId, questionText);
       return (
         <LongAnswerQuestion 
           questionId={questionId} 
-          questionText={questionText} 
+          questionText={questionText}
+          answersData={answersToRender}
          />
       );
    case 'Contradiction': 
@@ -71,7 +80,8 @@ useEffect(() => {
       return (
         <Contradiction 
           questionId={questionId} 
-          questionText={questionText} 
+          questionText={questionText}
+          answersData={answersToRender}
          />
       );
     // cases for other types

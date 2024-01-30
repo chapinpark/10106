@@ -9,6 +9,7 @@ import MyPhi from './pages/MyPhi';
 import LoginPage from './pages/LogInPage';
 import { AuthContext } from './context/AuthContext';
 import LoginStatus from './components/LoginStatus';
+import UserAnswers from './components/UserAnswers'; // Adjust the path as necessary
 import './App.css';
 
 
@@ -94,6 +95,7 @@ function App() {
       <div className="app-container" style={appStyle}>
         <Routes>
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="/showAllAnswers/:username" element={<UserAnswers />} />
           <Route path="/" element={
             <>
               

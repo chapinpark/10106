@@ -36,6 +36,11 @@ app.use('/api', updateTablesRouter);
 const resetPasswordRouter = require('./server/api/resetPasswordRouter'); // Adjust 
 app.use('/api/reset-password', resetPasswordRouter);
 
+//for pdf generation using puppeteer
+const pdfRoutes = require('./server/api/pdfRoutes');
+app.use('/api/pdf', pdfRoutes);
+
+
 
 // Serve React App in production
 

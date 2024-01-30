@@ -1,0 +1,19 @@
+const puppeteer = require('puppeteer');
+
+async function generatePDF(username, tableName) {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+
+    // Assuming you have a route in your React app that displays the answers
+    await page.goto(`http://localhost:3000/answers/${tableName}/${username}`, { waitUntil: 'networkidle2' });
+
+    const pdf = await page.pdf({ 
+        format: 'A4',
+        printBackground: true
+    });
+
+    await browser.close();
+    return pdf;
+}
+
+module.exports = generatePDF;

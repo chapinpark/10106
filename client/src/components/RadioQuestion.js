@@ -2,6 +2,8 @@ import React, { useContext } from 'react';
 import { QuestionsContext } from '../context/QuestionsContext';
 
 function RadioQuestion({ questionId, questionText, questionOptions, selectedAnswers }) {
+  console.log('RadioQuestion data', { questionId, questionText, selectedAnswers });
+
   const { updateAnswer } = useContext(QuestionsContext);
   const safeSelectedAnswers = selectedAnswers || [];
 
