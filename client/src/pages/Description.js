@@ -1,6 +1,5 @@
 // Description.js
 import React from 'react';
-import './CoursePages.css';
 import DescriptionBoxComponent from '../components/DescriptionBoxComponent'; // Adjust the path based on your folder structure
 import GradeScheme from '../components/GradeScheme';
 

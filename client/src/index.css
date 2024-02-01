@@ -12,3 +12,9 @@ html,body {
 
 }
 
+@media print {
+    body, html {
+        overflow: visible !important;
+        height: auto !important;
+    }
+}

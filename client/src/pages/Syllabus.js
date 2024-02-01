@@ -5,6 +5,8 @@ import readingsArray from '../utils/readings.js'; // Adjust the path as necessar
 import readingsIcon from '../icons/reading.png';
 import pdfIcon from '../icons/pdf.png';
 import lectureIcon from '../icons/lecture.png';
+import videoIcon from '../icons/video.png'; // Adjust the path as necessary
+
 
 
 
@@ -22,28 +24,28 @@ const topics = [
   { title: "The argument from evil", lectureDay: 5 },
   { title: "The free will defense", lectureDay: 6 },
   { title: "Evil and life after death", lectureDay: 7 },
-  { title: "Discussion day" },
+  { title: "Discussion day: 'White Christmas'", discussionDay: 1 },
   { title: "Free will vs. fate", lectureDay: 8 },
   { title: "Free will vs. determinism", lectureDay: 9 },
   { title: "Free will vs. science", lectureDay: 10 },
-  { title: "Discussion day",  },
+  { title: "Discussion day: 'Hang the DJ'", discussionDay: 1  },
   { title: "Identity and survival", lectureDay: 11 },
   { title: "Consciousness and immaterial souls", lectureDay: 12 },
   { title: "Puzzles of survival", lectureDay: 13 },
   { title: "Survival and immortality", lectureDay: 14 },
   { title: "Spring break",  },
   { title: "Spring break",  },
-  { title: "Discussion day",  },
+  { title: "Discussion day: 'San Junipero'", discussionDay: 1 },
   { title: "Should I believe without certainty?", lectureDay: 15 },
   { title: "Should I believe without evidence?", lectureDay: 16 },
   { title: "Should I believe what will make me happy?", lectureDay: 17 },
-  { title: "Discussion day",  },
+  { title: "Discussion day: 'Inception'", discussionDay: 1  },
   { title: "[class canceled]",  },
   { title: "Is morality real? Is it relative?", lectureDay: 18 },
   { title: "Right and wrong, good and bad", lectureDay: 19 },
   { title: "TBA",  },
   { title: "What is justice?", lectureDay: 20 },
-  { title: "Discussion day", },
+  { title: "Discussion day: 'Nosedive'", discussionDay: 1 },
   { title: "Concluding lecture",  },
   { title: "[My Philosophy discussions]",  }
 ];
@@ -200,6 +202,12 @@ const generateTableRows = (classDates, topics, sections) => {
                 </a>
               </>
             )}
+                {/* Add this new code for discussionDay */}
+          {topic.discussionDay && (
+            <a href="https://reserves.library.nd.edu/courses/202320_31915/reserves" target="_blank" rel="noopener noreferrer">
+              <img src={videoIcon} alt="Discussion Video" className="syllabusIcon" />
+            </a>
+          )}
           </td>
         </tr>
       );

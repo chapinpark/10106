@@ -243,8 +243,6 @@ h2{
 }
 
 
-
-
 @media (max-width: 768px) {
  
 
@@ -261,5 +259,14 @@ h2{
   /* When menu is active */
   .left-menu-container.active {
     left: 0; /* Bring into view */
+  }
+}
+
+/* formatting for pdf generation */
+
+
+@media print {
+  .app-container {
+    min-height: auto;
   }
 }

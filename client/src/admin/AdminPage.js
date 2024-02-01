@@ -133,8 +133,33 @@ const handleAddUsers = async (users) => {
   }
 };
 
+  // code for pdf generation
   
-  
+const [username, setUsername] = useState('');
+
+const handleGeneratePDF = async () => {
+  const apiUrl = process.env.REACT_APP_API_BASE_URL; // Use the API base URL
+
+  try {
+    const response = await fetch(`${apiUrl}/api/generate-pdf`, { // Update the URL
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username })
+    });
+
+    if (response.ok) {
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      window.open(url, '_blank');
+    } else {
+      console.error('Failed to generate PDF');
+    }
+  } catch (error) {
+    console.error('Error generating PDF:', error);
+  }
+};
+
+
   
   
   
@@ -202,18 +227,33 @@ if (!loggedIn) {
   <button onClick={handleAddUser}>Add User</button>
       </div>
       
-      <div>
-  <h3>Test User Answers Route</h3>
-  <form onSubmit={handleTestRoute}>
-    <input
-      type="text"
-      value={testUsername}
-      onChange={(e) => setTestUsername(e.target.value)}
-      placeholder="Enter username to test"
-    />
-    <button type="submit">Test Route</button>
+ <div>
+  <h3>View User Answers</h3>
+  <form onSubmit={handleTestRoute} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '1em' }}>
+      <input
+        type="text"
+        value={testUsername}
+        onChange={(e) => setTestUsername(e.target.value)}
+        placeholder="Enter username"
+        style={{ marginRight: '10px' }} // Adds space between the input field and the submit button
+      />
+      <button type="submit">Submit</button>
+    </div>
   </form>
 </div>
+
+      
+      <div>
+        <h3>Generate PDF for User</h3>
+      <input
+        type="text"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        placeholder="Enter Username"
+      />
+      <button onClick={handleGeneratePDF}>Generate PDF</button>
+    </div>
 
    <div>
   <h3>Upload CSV of users (must have netid and fullname columns)</h3>

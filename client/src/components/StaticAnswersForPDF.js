@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchAnswersForUser } from '../context/QuestionsContext'; // adjust import path
-import MasterQuestion from '../components/MasterQuestion';
+import MasterQuestion from './MasterQuestion';
 import { godQuestions } from '../questions/godQuestions';
 import { freeWillQuestions } from '../questions/freeWillQuestions';
 import { personalIdentityQuestions } from '../questions/personalIdentityQuestions';
 import { beliefQuestions } from '../questions/beliefQuestions';
 import { ethicsQuestions } from '../questions/ethicsQuestions';
 
-function UserAnswers() {
+function StaticAnswersForPDF() {
   const { username } = useParams();
   const [allAnswers, setAllAnswers] = useState({});
   const [loading, setLoading] = useState(true);
@@ -41,19 +41,18 @@ function UserAnswers() {
   ];
 
   return (
-    <div key={username}>
+    <div key={username} style={{ backgroundColor: 'blue', paddingLeft: '60px', paddingRight: '40px', paddingTop: '60px', paddingBottom: '60px' }}>
           <h1>Answers for {username}</h1>
-                  {console.log('Rendered allAnswers state:', JSON.stringify(allAnswers, null, 2))}
       {questionSections.map((section, index) => (
         <div key={index}>
-          <h2>{section.title}</h2>
+          <h2 >{section.title}</h2>
           {section.questions.map((question, qIndex) => (
             <MasterQuestion key={qIndex} question={question} answersData={allAnswers} isAdminMode={true}/>
           ))}
         </div>
       ))}
-    </div>
+      </div>
   );
 }
 
-export default UserAnswers;
+export default StaticAnswersForPDF;
