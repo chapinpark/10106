@@ -4,6 +4,7 @@ import debounce from 'lodash.debounce';
 import { createQuestionTableMapping } from '../utils/createQuestionTableMapping';
 import { createQuestionConditionMapping } from '../utils/createQuestionConditionMapping';
 import { transformAnswersToTheses } from '../utils/thesisTransformations';
+import { updateTheses } from '../utils/updateTheses';
 
 
 // Utility function to parse comma-separated answers; MC answers are stored as strings in database but converted to arrays for use in the answers state (for ordinary user use) and the allAnswers state (for pdf generation)
@@ -12,36 +13,10 @@ import { transformAnswersToTheses } from '../utils/thesisTransformations';
     return commaSeparatedString ? commaSeparatedString.split(',') : [];
   };
 
-  // defines a function which fetches all answers for a user given as argument; needed in pdf generation process in the UserAnswers component.
-export const fetchAnswersForUser = async (username) => {
-  const apiUrl = process.env.REACT_APP_API_BASE_URL;
-  const tableNames = ['God', 'FreeWill', 'PersonalIdentity', 'Belief', 'Ethics'];
-  let allAnswers = {};
+// state needed for pdf generation
 
-  for (const tableName of tableNames) {
-    try {
-      const response = await fetch(`${apiUrl}/api/answers/${tableName}/${username}`);
-      if (response.ok) {
-        const data = await response.json();
 
-        // Flatten the structure by iterating over each row and extracting questionId and answers
-        data.forEach(row => {
-          Object.keys(row).forEach(questionId => {
-            // Check if the questionId is 'username', skip it as it's not an actual question
-            if (questionId !== 'username') {
-              allAnswers[questionId] = parseCommaSeparatedAnswers(row[questionId]);
-            }
-          });
-        });
-      } else {
-        console.error(`Error fetching data for table ${tableName}: ${response.statusText}`);
-      }
-    } catch (error) {
-      console.error(`Network error fetching data for table ${tableName}:`, error);
-    }
-  }
-  return allAnswers; // Return flattened all answers
-};
+
 
 
 
@@ -51,6 +26,8 @@ export const QuestionsContext = createContext();
 export const QuestionsProvider = ({ children }) => {
   const [answers, setAnswers] = useState({});
   const [theses, setTheses] = useState({});
+  const [answersForPDF, setAnswersForPDF] = useState({});
+  const [thesesForPDF, setThesesForPDF] = useState({});
   const { username } = useContext(AuthContext);
 
   const questionTableMapping = createQuestionTableMapping(answers);
@@ -83,13 +60,55 @@ export const QuestionsProvider = ({ children }) => {
 
   const debouncedSendUpdateToServer = debounce(sendUpdateToServer, 2000);
 
+// core function that updates the answers state and sends the update to the server
+
   const updateAnswer = (questionId, newAnswer) => {
     const tableName = questionTableMapping[questionId];
     setAnswers(prevAnswers => ({ ...prevAnswers, [questionId]: newAnswer }));
     debouncedSendUpdateToServer(questionId, newAnswer, tableName);
   };
 
- 
+  // dcode for PDF generation
+
+const fetchAnswersForUser = async (username) => {
+  const apiUrl = process.env.REACT_APP_API_BASE_URL;
+  const tableNames = ['God', 'FreeWill', 'PersonalIdentity', 'Belief', 'Ethics'];
+  let answersForPDF = {};
+
+  for (const tableName of tableNames) {
+    try {
+      const response = await fetch(`${apiUrl}/api/answers/${tableName}/${username}`);
+      if (response.ok) {
+        const data = await response.json();
+
+        // Flatten the structure by iterating over each row and extracting questionId and answers
+        data.forEach(row => {
+          Object.keys(row).forEach(questionId => {
+            // Check if the questionId is 'username', skip it as it's not an actual question
+            if (questionId !== 'username') {
+              answersForPDF[questionId] = parseCommaSeparatedAnswers(row[questionId]);
+            }
+          });
+        });
+      } else {
+        console.error(`Error fetching data for table ${tableName}: ${response.statusText}`);
+      }
+    } catch (error) {
+      console.error(`Network error fetching data for table ${tableName}:`, error);
+    }
+  }
+  return answersForPDF; // Return flattened all answers
+};
+
+  // Transformation of theses for PDF generation
+  useEffect(() => {
+    if (Object.keys(answersForPDF).length) {
+      const transformedThesesForPDF = transformAnswersToTheses(answersForPDF);
+      setThesesForPDF(transformedThesesForPDF);
+    }
+  }, [answersForPDF]);
+
+ // regular fetch of ansers and set of the answers and theses state
 
   useEffect(() => {
     const fetchAnswers = async (tableName) => {
@@ -121,10 +140,9 @@ export const QuestionsProvider = ({ children }) => {
 
 useEffect(() => {
   const newTheses = transformAnswersToTheses(answers);
-//  console.log('Debug: New theses', newTheses);
   setTheses(newTheses);
+    console.log('Debug: New theses', newTheses);
 }, [answers]);
-
 
 
   
@@ -132,7 +150,7 @@ useEffect(() => {
   const questionConditionMapping = createQuestionConditionMapping(answers);
 
   return (
-    <QuestionsContext.Provider value={{ answers, updateAnswer, theses, questionConditionMapping }}>
+    <QuestionsContext.Provider value={{ answers, updateAnswer, theses, questionConditionMapping, thesesForPDF, setAnswersForPDF, setThesesForPDF, fetchAnswersForUser }}>
       {children}
     </QuestionsContext.Provider>
   );

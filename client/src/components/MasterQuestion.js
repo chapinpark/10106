@@ -11,8 +11,8 @@ import './MasterQuestion.css';
  
 // import other question components
 
-function MasterQuestion({ question, answersData, isAdminMode = false }) {
-    console.log('MasterQuestion props', { question, answersData, isAdminMode });
+function MasterQuestion({ question, answersData, thesesData, isForPDF = false }) {
+    //console.log('MasterQuestion props', { question, answersData, isForPDF });
 
  const context = useContext(QuestionsContext); // Get the context
   const { updateAnswer, theses } = context;
@@ -21,10 +21,14 @@ function MasterQuestion({ question, answersData, isAdminMode = false }) {
 
   // Determine which set of answers to use; in ordinary case based on the user's answers state, and in pdf generation given by argument allAnswers
   const answersToRender = answersData || context.answers;
+    const thesesToRender = thesesData || theses;
 
-console.log('answersToRender:', answersToRender);
+// const answersToRender = context.answers;
+
+  //console.log('answersToRender:', answersToRender);
+  //console.log(theses);
   // Evaluate the condition to decide whether to render the question
-  const shouldRender = questionCondition ? questionCondition(answersToRender,classDay,theses) : true;
+  const shouldRender = questionCondition ? questionCondition(answersToRender,classDay,thesesToRender) : true;
 
   // Side-effect to update the answer if the question should not be rendered
   // and if the question type is Radio or Checkbox
@@ -33,11 +37,12 @@ useEffect(() => {
   const currentAnswer = answersToRender[questionId];
   const shouldUpdate = !shouldRender && isRadioOrCheckbox && 
                        (!Array.isArray(currentAnswer) || currentAnswer.length !== 1 || currentAnswer[0] !== '0');
+  const thesesAreDefined = Object.keys(thesesToRender).length > 0; // Or a more specific condition based on your data structure
 
-  if (shouldUpdate && !isAdminMode) {
+  if (shouldUpdate && !isForPDF && thesesAreDefined) {
     updateAnswer(questionId, ['0']);
   }
-}, [shouldRender, answersToRender, questionId, updateAnswer, questionType, isAdminMode]);
+}, [shouldRender, answersToRender, thesesToRender, questionId, updateAnswer, questionType, isForPDF]);
 
 
 //console.log('Rendering with answers:', answersToRender);
@@ -73,6 +78,7 @@ useEffect(() => {
           questionId={questionId} 
           questionText={questionText}
           answersData={answersToRender}
+           isForPDF={isForPDF} // Pass the isForPDF prop here to tell it whether to render a div or textarea
          />
       );
    case 'Contradiction': 

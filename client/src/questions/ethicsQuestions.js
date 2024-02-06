@@ -331,7 +331,48 @@ export const ethicsQuestions = (answers) => [
     questionCondition: (answers, classDay, theses) => showIf(answers, "whichtheoryofjustice", 5), 
   },
 
+// concluding questions about challenged beliefs
 
+{
+  questionId: "ethicsconcludingwhichargument",
+  questionText: 'Which argument that we talked about in this section of the class was most challenging to the beliefs that you had coming into the class? (If the argument has a name, you can just name the argument.)',
+  questionType: 'LongAnswer',
+  questionCondition: (answers, classDay, theses) => classDay >= 20,
+},
+{
+  questionId: "ethicsconcludingwhichbelief",
+  questionText: 'What belief did it challenge? Why did you hold that belief coming into the class? (The explanation can be biographical rather than philosophical.)',
+  questionType: 'LongAnswer',
+  questionCondition: (answers, classDay, theses) => classDay >= 20,
+  },
+{
+  questionId: "ethicsconcludingdiditchange",
+  questionText: 'In the end, did the argument cause you to weaken or change that belief?',
+  questionType: 'Radio',
+  questionOptions: ['Yes', 'No'],
+  questionCondition: (answers, classDay, theses) => classDay >= 20,
+  },
+  {
+    questionId: "ethicsconcludingchangedmind",
+    questionText: 'Explain why you think that the argument in question may be sound, by explaining why you think that each of the independent premises is likely to be true. State what you take to be the strongest objection to one of those premises, and defend the premise against the objection. (It is fine if your answer here overlaps with other answers you gave in this section.)',
+    questionType: 'LongAnswer',
+    questionCondition: (answers) => showIf(answers, 'ethicsconcludingdiditchange', 1)
+  },
+  {
+    questionId: "ethicsconcludingdidnotchange",
+    questionText: 'Explain why in the end you did not find the argument convincing, by saying which independent premise you think is false, and why. Also say why in the end you think that the belief challenged by the argument is more likely to be true than false. (It is fine if your answer here overlaps with other answers you gave in this section.)',
+    questionType: 'LongAnswer',
+    questionCondition: (answers) => showIf(answers, 'ethicsconcludingdiditchange', 2)
+  },
+
+  // these are dummy questions which define theses that the user is committed to; integrated into the anseres state and saved on the databasse rather than dynamically generated. This solves issues about questions being deleted when the answers state first loads.
+
+    {
+    questionId: "thesissoundargumentforatheism",
+    questionText: 'Dummy',
+    questionType: 'Radio',
+    questionCondition: () => false
+  },
 
 ];
 

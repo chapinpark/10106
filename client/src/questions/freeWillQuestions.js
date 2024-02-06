@@ -569,7 +569,36 @@ questionCondition: (answers, classDay, theses) => classDay >= 8,
   questionText: "There can't both be a sound argument for the existence of free will and a sound argument against it. (The conclusion of a sound argument is always true.) Similarly, it can't be the case both that human free will explains the existence of some evil in the world and that human beings lack free will. Think about how best to resolve this contradiction in your views.",
   questionCondition: (answers, classDay, theses) => theses["committedToFreeWill"] === 1 && theses["deniesFreeWill"] === 1, 
 },
-
+{
+  questionId: "FWconcludingwhichargument",
+  questionText: 'Which argument that we talked about in this section of the class was most challenging to the beliefs that you had coming into the class? (If the argument has a name, you can just name the argument.)',
+  questionType: 'LongAnswer',
+  questionCondition: (answers, classDay, theses) => classDay >= 10,
+},
+{
+  questionId: "FWconcludingwhichbelief",
+  questionText: 'What belief did it challenge? Why did you hold that belief coming into the class? (The explanation can be biographical rather than philosophical.)',
+  questionType: 'LongAnswer',
+  questionCondition: (answers, classDay, theses) => classDay >= 10,
+  },
+{
+  questionId: "FWconcludingdiditchange",
+  questionText: 'In the end, did the argument cause you to weaken or change that belief?',
+  questionType: 'Radio',
+  questionOptions: ['Yes', 'No'],
+  questionCondition: (answers, classDay, theses) => classDay >= 10,
+  },
+  {
+    questionId: "FWconcludingchangedmind",
+    questionText: 'Explain why you think that the argument in question may be sound, by explaining why you think that each of the independent premises is likely to be true. State what you take to be the strongest objection to one of those premises, and defend the premise against the objection. (It is fine if your answer here overlaps with other answers you gave in this section.)',
+    questionType: 'LongAnswer',
+    questionCondition: (answers) => showIf(answers, 'FWconcludingdiditchange', 1)
+  }, {
+    questionId: "FWconcludingdidnotchange",
+    questionText: 'Explain why in the end you did not find the argument convincing, by saying which independent premise you think is false, and why. Also say why in the end you think that the belief challenged by the argument is more likely to be true than false. (It is fine if your answer here overlaps with other answers you gave in this section.)',
+    questionType: 'LongAnswer',
+    questionCondition: (answers) => showIf(answers, 'FWconcludingdiditchange', 2)
+  },
 
 ];
 

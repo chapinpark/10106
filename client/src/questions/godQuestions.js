@@ -610,7 +610,7 @@ export const godQuestions = (answers, classDay, theses) => [
   questionType: "Radio",
   questionText: "It looks like you don't think that any of the arguments we've discussed for the existence of God are sound, and also don't think that any of the arguments that we've discussed against the existence of God are sound. Do you believe that God exists?",
   questionOptions: ["Yes", "No"],
-  questionCondition: (answers, classDay, theses) => showIf(answers, "argumentfrompointlessevil", 2) &&
+  questionCondition: (answers, classDay, theses) => classDay >=7 && showIf(answers, "argumentfrompointlessevil", 2) &&
       (
         showIf(answers, "naturalevilsound", 2) ||
         showIf(answers, "rowesfawnsound", 2) ||
@@ -646,11 +646,11 @@ export const godQuestions = (answers, classDay, theses) => [
     questionId: "theistwhothinksabilitytodoevilisimportant",
     questionType: "LongAnswer",
     questionText: "You think that God exists, and you also think that having the ability to freely do evil is an important good. Here's a worry about that combination of views. First, many people have thought that God is not only perfectly good,  but also necessarily perfectly good. After all, wouldn't it be better to be so perfect that it is literally impossible for you to do wrong? But if that is true, then it is impossible for God to do evil, from which it seems to follow that God can't freely do evil. But then how can it be a very important good for us to be able to freely cause evil? Isn't God the greatest possible being? If God lacks this good, how can it be so important for us?",
-    questionCondition: (answers, classDay, theses) => theses["theism"] === 1 && (showIf(answers, "doesfreewillexplain", 1) || (showIf(answers, "doesfreewillexplain", 2) && !(showIf(answers, "fwdelementstoreject", 3)))), 
+    questionCondition: (answers, classDay, theses) => theses["theism"] === 1 && !(showIf(answers, "fwdelementstoreject", 3)) && ((showIf(answers, "doesfreewillexplain", 1) || (showIf(answers, "doesfreewillexplain", 2)) )), 
   },
 
 {
-  questionId: "theismalternatives",
+  questionId: "theismalternativesthreechoices",
   questionType: "Radio",
   questionText: "You don't believe that the classical God exists. How would you describe your view?",
   questionOptions: [
@@ -658,14 +658,14 @@ export const godQuestions = (answers, classDay, theses) => [
     "I'm a quasi-theist",
     "I'm an agnostic. I don't believe any of these views because I can't decide which is true.",
   ],
-  questionCondition: (answers, classDay, theses) => classDay >=7 && (showIf(answers, "nosoundarguments", 2) || theses["soundargumentagainsttheism"] === 1),
+  questionCondition: (answers, classDay, theses) => (showIf(answers, "argumentfrompointlessevil", 1) || showIf(answers, "naturalevilsound", 1) || showIf(answers, "rowesfawnsound", 1) || showIf(answers, "horrrificevilsound", 1)),
 },
 {
   questionId: "atheismrejectallarguments",
   questionType: "Radio",
   questionText: "Is that because you think that there's a sound and convincing argument for atheism that we haven't discussed in this class?",
   questionOptions: ["Yes", "No"],
-  questionCondition: (answers, classDay, theses) => showIf(answers, "theismalternatives", 1),
+  questionCondition: (answers, classDay, theses) => showIf(answers, "theismalternativesthreechoices", 1),
 },
 {
   questionId: "novelatheisticargument",
@@ -684,26 +684,34 @@ export const godQuestions = (answers, classDay, theses) => [
   questionType: "Radio",
   questionText: "Most quasi-theists believe that some being exists, which has some but not all of the properties which the classical conception attributes to God. Is your view like that?",
   questionOptions: ["Yes", "No"],
-  questionCondition: (answers, classDay, theses) => showIf(answers, "theismalternatives", 2),
+  questionCondition: (answers, classDay, theses) => showIf(answers, "theismalternativesthreechoices", 2),
 },
 {
   questionId: "definingquasigod",
-  questionType: "Checkbox",
-  questionText: "Let's call that being 'quasi-God.' Which of the properties that the classical conception ascribes to God do you think that quasi-God does not have?",
-  questionOptions: [
-    "omnipotent",
-    "perfectly good",
-    "omniscient",
-    "creator of the universe",
-  ],
-  questionCondition: (answers, classDay, theses) => showIf(answers, "twokindsquasitheism", 1),
-},
-{
-  questionId: "whyquasigod",
   questionType: "LongAnswer",
-  questionText: "Why do you think that it is more likely that quasi-God, so defined, exists, rather than the classical God?",
+  questionText: "Let's call that being 'quasi-God.' Which of the properties that the classical conception ascribes to God do you think that quasi-God does not have, and vice versa?",
   questionCondition: (answers, classDay, theses) => showIf(answers, "twokindsquasitheism", 1),
-},
+  },
+{
+  questionId: "quasitheismGPB",
+  questionText: 'The unifying idea behind the classical conception of God, which says that God all powerful, all knowing, and perfectly good, is that God the greatest possible being; for any property that would be better to have than not to have, God has that property. Do you think that quasi-God is the greatest possible being?',
+  questionType: 'Radio',
+  questionOptions: ['Yes', 'No'],
+  questionCondition: (answers) => showIf(answers, "twokindsquasitheism", 1),
+  },
+  {
+    questionId: "explainwhyquasigodisgreater",
+    questionText: 'Explain why you think that quasi-God is the greatest possible being. Wouldn\'t a being with the properties of the classical God be greater?',
+    questionType: 'LongAnswer',
+    questionCondition: (answers) => showIf(answers, 'quasitheismGPB', 1)
+  },
+  {
+    questionId: "makesenseoflessgoodquasigod",
+    questionText: 'The classical conception of God says that reality is ultimately explainable as the creation of an absolutely perfect being. On most versions of quasi-theism, reality is ultimately to be explained by a being which is perhaps very good, but not perfect. Is your view like that? If not, why not? If so, isn\'t it a little weird if the ultimate explanation of things bottoms out in a pretty good but not perfect being?',
+    questionType: 'LongAnswer',
+    questionCondition: (answers) => showIf(answers, 'quasitheismGPB', 2)
+  },
+
 {
   questionId: "novelquasitheism",
   questionType: "LongAnswer",
@@ -714,9 +722,41 @@ export const godQuestions = (answers, classDay, theses) => [
   questionId: "questionforagnostic",
   questionType: "LongAnswer",
   questionText: "When thinking about a question as big and complex as the question of whether God exists, it's not unreasonable to have some doubts about any of the answers. But if you think about it, we have beliefs about all sorts of things about which we cannot be completely certain. For example, I believe that Notre Dame will win more football games than it loses next year, even though of course it might turn out that they won't. Is there one of the options above that you think is most likely to be true? If so, pick that one. If not, explain why the question of God's existence is particularly hard for you to form any beliefs at all about.",
-  questionCondition: (answers, classDay, theses) => showIf(answers, "theismalternatives", 3),
-},
+  questionCondition: (answers, classDay, theses) => showIf(answers, "theismalternativesthreechoices", 3),
+  },
 
+// concluding questions about challenged beliefs
+
+{
+  questionId: "godconcludingwhichargument",
+  questionText: 'Which argument that we talked about in this section of the class was most challenging to the beliefs that you had coming into the class? (If the argument has a name, you can just name the argument.)',
+  questionType: 'LongAnswer',
+  questionCondition: (answers, classDay, theses) => classDay >= 7,
+},
+{
+  questionId: "godconcludingwhichbelief",
+  questionText: 'What belief did it challenge? Why did you hold that belief coming into the class? (The explanation can be biographical rather than philosophical.)',
+  questionType: 'LongAnswer',
+  questionCondition: (answers, classDay, theses) => classDay >= 7,
+  },
+{
+  questionId: "godconcludingdiditchange",
+  questionText: 'In the end, did the argument cause you to weaken or change that belief?',
+  questionType: 'Radio',
+  questionOptions: ['Yes', 'No'],
+  questionCondition: (answers, classDay, theses) => classDay >= 7,
+  },
+  {
+    questionId: "godconcludingchangedmind",
+    questionText: 'Explain why you think that the argument in question may be sound, by explaining why you think that each of the independent premises is likely to be true. State what you take to be the strongest objection to one of those premises, and defend the premise against the objection. (It is fine if your answer here overlaps with other answers you gave in this section.)',
+    questionType: 'LongAnswer',
+    questionCondition: (answers) => showIf(answers, 'godconcludingdiditchange', 1)
+  }, {
+    questionId: "godconcludingdidnotchange",
+    questionText: 'Explain why in the end you did not find the argument convincing, by saying which independent premise you think is false, and why. Also say why in the end you think that the belief challenged by the argument is more likely to be true than false. (It is fine if your answer here overlaps with other answers you gave in this section.)',
+    questionType: 'LongAnswer',
+    questionCondition: (answers) => showIf(answers, 'godconcludingdiditchange', 2)
+  },
 
     // #endregion
 ];

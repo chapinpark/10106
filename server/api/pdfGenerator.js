@@ -17,9 +17,9 @@ router.post('/generate-pdf', async (req, res) => {
 
 
     // Generate screenshot for debugging
-      await page.screenshot({ path: 'screenshot.png', fullPage: true });
+     // await page.screenshot({ path: 'screenshot.png', fullPage: true });
       
-      await page.setViewport({ width: 1280, height: 1024 }); // Adjust height as needed
+     // await page.setViewport({ width: 1280, height: 1024 }); // Adjust height as needed
 
 
     // Define PDF options
@@ -27,12 +27,12 @@ router.post('/generate-pdf', async (req, res) => {
         format: 'Letter',
         printBackground: true,
         margin: {
-          top: '0mm',
-          right: '0mm',
-          bottom: '0mm',
-          left: '0mm'
+          top: '1in',
+          right: '1in',
+          bottom: '1in',
+          left: '1in'
         },
-        scale: 0.7,
+        scale: 0.8,
       displayHeaderFooter: true,
       headerTemplate: '<div style="font-size:10px; text-align:center; width:100%;"></span></div>',
         footerTemplate: '<div style="font-size:10px; text-align:center; width:100%;">Page <span class="pageNumber"></span></div>'

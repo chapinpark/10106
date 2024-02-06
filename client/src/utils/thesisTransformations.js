@@ -17,10 +17,10 @@ export const transformAnswersToTheses = (answers) => {
     theism = (yes("nosoundarguments", 1) || yes("iskalamsound", 1) || yes("iscosmologicalsound", 1) || yes("finetuningsound", 1)) ? 1 : 0;
   
   const atheism =
-    yes("theismalternatives", 1) ? 1 : 0;
+    yes("theismalternativesthreechoices", 1) ? 1 : 0;
   
   const quasitheism =
-    yes("theismalternatives", 2) ? 1 : 0;
+    yes("theismalternativesthreechoices", 2) ? 1 : 0;
 
   const committedToFreeWill =
     (

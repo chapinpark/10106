@@ -1,53 +1,60 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchAnswersForUser } from '../context/QuestionsContext'; // adjust import path
 import MasterQuestion from './MasterQuestion';
 import { godQuestions } from '../questions/godQuestions';
 import { freeWillQuestions } from '../questions/freeWillQuestions';
 import { personalIdentityQuestions } from '../questions/personalIdentityQuestions';
 import { beliefQuestions } from '../questions/beliefQuestions';
 import { ethicsQuestions } from '../questions/ethicsQuestions';
+import { QuestionsContext } from '../context/QuestionsContext'; 
+
+
+
+
 
 function StaticAnswersForPDF() {
   const { username } = useParams();
-  const [allAnswers, setAllAnswers] = useState({});
+  const [answersForPDF, setAnswersForPDF] = useState({});
+  const { fetchAnswersForUser, thesesForPDF } = useContext(QuestionsContext);
   const [loading, setLoading] = useState(true);
+
+ // console.log('answers state for', username 'is' answers);
 
     useEffect(() => {
             console.log('Fetching answers for:', username);
 
      setLoading(true);
-    setAllAnswers({}); // Reset answers state before fetching new data
+    setAnswersForPDF({}); // Reset answers state before fetching new data
 
     const fetchAndSetAnswers = async () => {
         const fetchedAnswers = await fetchAnswersForUser(username);
-    console.log(`Data fetched for ${username}:`, JSON.stringify(fetchedAnswers, null, 2));
-      setAllAnswers(fetchedAnswers); // Now using setAllAnswers
+    //console.log(`Data fetched for ${username}:`, JSON.stringify(fetchedAnswers, null, 2));
+      setAnswersForPDF(fetchedAnswers); // Now using setAllAnswers
       setLoading(false);
     };
 
-    fetchAndSetAnswers();
-  }, [username]);
+      fetchAndSetAnswers();
+  }, [username, fetchAnswersForUser]);
 
   if (loading) return <div>Loading...</div>;
-  if (!allAnswers) return <div>No answers found for {username}.</div>;
+  if (!answersForPDF) return <div>No answers found for {username}.</div>;
 
   const questionSections = [
-    { title: 'Does God exist?', questions: godQuestions(allAnswers) },
-    { title: 'Do I have free will?', questions: freeWillQuestions(allAnswers) },
-    { title: 'What am I?', questions: personalIdentityQuestions(allAnswers) },
-    { title: 'What should I believe?', questions: beliefQuestions(allAnswers) },
-    { title: 'How should I live?', questions: ethicsQuestions(allAnswers) }
+    { title: 'Does God exist?', questions: godQuestions(answersForPDF) },
+    { title: 'Do I have free will?', questions: freeWillQuestions(answersForPDF) },
+    { title: 'What am I?', questions: personalIdentityQuestions(answersForPDF) },
+    { title: 'What should I believe?', questions: beliefQuestions(answersForPDF) },
+    { title: 'How should I live?', questions: ethicsQuestions(answersForPDF) }
   ];
 
   return (
-    <div key={username} style={{ backgroundColor: 'blue', paddingLeft: '60px', paddingRight: '40px', paddingTop: '60px', paddingBottom: '60px' }}>
+    <div key={username}>
           <h1>Answers for {username}</h1>
       {questionSections.map((section, index) => (
         <div key={index}>
-          <h2 >{section.title}</h2>
+          <h2 style={{ color: '#fe938c', fontSize: '25px' }}>{section.title}</h2>
           {section.questions.map((question, qIndex) => (
-            <MasterQuestion key={qIndex} question={question} answersData={allAnswers} isAdminMode={true}/>
+            <MasterQuestion key={qIndex} question={question} answersData={answersForPDF} thesesData={thesesForPDF} isForPDF={true}/>
           ))}
         </div>
       ))}
