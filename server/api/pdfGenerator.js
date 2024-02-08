@@ -34,7 +34,7 @@ router.post('/generate-pdf', async (req, res) => {
   const reactAppUrl = process.env.REACT_APP_URL || 'http://localhost:3000';
   await page.goto(`${reactAppUrl}/showAllAnswers/${username}`, {
     waitUntil: 'networkidle0', // Wait for the page to load completely
-  });
+  }); 
     
     
     // Use the base URL from the environment variable
