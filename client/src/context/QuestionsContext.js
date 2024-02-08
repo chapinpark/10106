@@ -4,7 +4,6 @@ import debounce from 'lodash.debounce';
 import { createQuestionTableMapping } from '../utils/createQuestionTableMapping';
 import { createQuestionConditionMapping } from '../utils/createQuestionConditionMapping';
 import { transformAnswersToTheses } from '../utils/thesisTransformations';
-import { updateTheses } from '../utils/updateTheses';
 
 
 // Utility function to parse comma-separated answers; MC answers are stored as strings in database but converted to arrays for use in the answers state (for ordinary user use) and the allAnswers state (for pdf generation)
@@ -26,8 +25,8 @@ export const QuestionsContext = createContext();
 export const QuestionsProvider = ({ children }) => {
   const [answers, setAnswers] = useState({});
   const [theses, setTheses] = useState({});
-  const [answersForPDF, setAnswersForPDF] = useState({});
-  const [thesesForPDF, setThesesForPDF] = useState({});
+   const [setAnswersForPDF] = useState({});
+   const [thesesForPDF, setThesesForPDF] = useState({});
   const { username } = useContext(AuthContext);
 
   const questionTableMapping = createQuestionTableMapping(answers);
@@ -70,9 +69,9 @@ export const QuestionsProvider = ({ children }) => {
 
   // dcode for PDF generation
 
-const fetchAnswersForUser = async (username) => {
+const fetchAnswersForUser = async (username, setAnswersForPDF, setThesesForPDF) => {
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
-  const tableNames = ['God', 'FreeWill', 'PersonalIdentity', 'Belief', 'Ethics'];
+  const tableNames = ['studentdata', 'God', 'FreeWill', 'PersonalIdentity', 'Belief', 'Ethics'];
   let answersForPDF = {};
 
   for (const tableName of tableNames) {
@@ -80,11 +79,8 @@ const fetchAnswersForUser = async (username) => {
       const response = await fetch(`${apiUrl}/api/answers/${tableName}/${username}`);
       if (response.ok) {
         const data = await response.json();
-
-        // Flatten the structure by iterating over each row and extracting questionId and answers
         data.forEach(row => {
           Object.keys(row).forEach(questionId => {
-            // Check if the questionId is 'username', skip it as it's not an actual question
             if (questionId !== 'username') {
               answersForPDF[questionId] = parseCommaSeparatedAnswers(row[questionId]);
             }
@@ -97,16 +93,15 @@ const fetchAnswersForUser = async (username) => {
       console.error(`Network error fetching data for table ${tableName}:`, error);
     }
   }
-  return answersForPDF; // Return flattened all answers
+
+  // Update both pieces of state after fetching and processing the data
+  setAnswersForPDF(answersForPDF); // Update state for answers
+  if (Object.keys(answersForPDF).length) {
+    const transformedThesesForPDF = transformAnswersToTheses(answersForPDF);
+    setThesesForPDF(transformedThesesForPDF); // Update state for theses
+  }
 };
 
-  // Transformation of theses for PDF generation
-  useEffect(() => {
-    if (Object.keys(answersForPDF).length) {
-      const transformedThesesForPDF = transformAnswersToTheses(answersForPDF);
-      setThesesForPDF(transformedThesesForPDF);
-    }
-  }, [answersForPDF]);
 
  // regular fetch of ansers and set of the answers and theses state
 
@@ -141,7 +136,7 @@ const fetchAnswersForUser = async (username) => {
 useEffect(() => {
   const newTheses = transformAnswersToTheses(answers);
   setTheses(newTheses);
-    console.log('Debug: New theses', newTheses);
+    //console.log('Debug: New theses', newTheses);
 }, [answers]);
 
 

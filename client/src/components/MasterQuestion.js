@@ -15,13 +15,14 @@ function MasterQuestion({ question, answersData, thesesData, isForPDF = false })
     //console.log('MasterQuestion props', { question, answersData, isForPDF });
 
  const context = useContext(QuestionsContext); // Get the context
-  const { updateAnswer, theses } = context;
+  // const { updateAnswer, theses } = context;
+  const { updateAnswer } = context;
   const { questionId, questionType, questionText, questionOptions, questionCondition } = question;
   const { classDay } = useClassInfo();
 
   // Determine which set of answers to use; in ordinary case based on the user's answers state, and in pdf generation given by argument allAnswers
   const answersToRender = answersData || context.answers;
-    const thesesToRender = thesesData || theses;
+    const thesesToRender = thesesData || context.theses;
 
 // const answersToRender = context.answers;
 

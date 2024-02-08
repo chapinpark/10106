@@ -14,7 +14,7 @@ function LongAnswerQuestion({ questionId, questionText, answersData, isForPDF })
 
   return (
     <div className='questionContainer'>
-      <p className='questionText'>{questionText}</p>
+      <p className='questionText longAnswerQuestionText'>{questionText}</p>
      {isForPDF ? (
         // Render a div with the text for PDF
         <div className='longAnswerTextForPDF'>{initialAnswer}</div>

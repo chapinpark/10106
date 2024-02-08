@@ -7,10 +7,18 @@ router.post('/generate-pdf', async (req, res) => {
   const { username } = req.body;
   const baseUrl = process.env.BASE_URL; // Access the environment variable
 
+ 
+
   try {
     const browser = await puppeteer.launch({ headless: true }); // Consider headless for production
     const page = await browser.newPage();
 
+     // Here's where you add the event listener for console messages
+  page.on('console', msg => {
+    console.log(`PAGE LOG: ${msg.text()}`);
+  });
+
+ 
     // Use the base URL from the environment variable
     const url = `http://localhost:3000/showAllAnswers/${username}`;
     await page.goto(url, { waitUntil: 'networkidle0' }); // Ensure this comes before waitForSelector
@@ -27,15 +35,15 @@ router.post('/generate-pdf', async (req, res) => {
         format: 'Letter',
         printBackground: true,
         margin: {
-          top: '1in',
-          right: '1in',
-          bottom: '1in',
-          left: '1in'
+          top: '0.75in',
+          right: '0.75in',
+          bottom: '0.75in',
+          left: '0.75in'
         },
         scale: 0.8,
       displayHeaderFooter: true,
       headerTemplate: '<div style="font-size:10px; text-align:center; width:100%;"></span></div>',
-        footerTemplate: '<div style="font-size:10px; text-align:center; width:100%;">Page <span class="pageNumber"></span></div>'
+        footerTemplate: '<div style="font-size:12px; font-style:sans; text-align:center; width:100%;"> <span class="pageNumber"></span></div>'
     };
 
     // Generate PDF with specified options

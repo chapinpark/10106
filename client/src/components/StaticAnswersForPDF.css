@@ -1,0 +1,96 @@
+/* Import Lobster font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime&family=Lobster&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+
+.PDFNameAtTop{
+    font-family: 'Lobster';
+    color: #ce4a4a;
+    text-align: left;
+}
+
+.sectionHeadingForPDF{
+    width: 8.1in;
+    text-align: center;
+    font-size: 28px;
+    font-family: var(--font-small-caps);
+    background-color:  #6688c3;
+    color: white;
+    padding: 0.2in;
+    margin-left: 0.1in;
+    border: 0.1in solid #ce4a4a;
+    border-radius: 0.1in;
+}
+
+@media print {
+
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+
+
+ .longAnswerTextForPDF {
+    page-break-inside: auto;
+     font-family: var(--font-mono);
+     font-size: 18px;
+    width: 100%;
+    background-color: #EEE2DE;
+    padding: 0.3in;
+    left: 0.1in;
+    text-align: left;
+      white-space: pre-wrap;
+      margin-top: 0;
+      border-bottom-left-radius: 0.1in; 
+      border-bottom-right-radius: 0.1in;
+  }
+.optionsContainer{
+    margin-top: 0.1in;
+}
+  .questionContainer {
+    box-shadow: none;
+    background-color: transparent;
+  }
+ .questionContainer.contradictionContainer {
+    background-color: transparent !important;
+    color: white;
+}
+.questionText{
+
+    page-break-inside: avoid;
+    color: white;
+    width: 100%;
+    break-after: avoid;
+    padding-left: 0.5in;
+    padding-right: 0.5in;
+    padding-top: 0.2in;
+    padding-bottom: 0.2in;
+    font-size: 20px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 0.05in;
+    margin-bottom: 0;
+    
+}
+
+.questionText:not(.longAnswerQuestionText) {
+       background-color: #48a56a;
+       border-radius: 0.1in; /* CSS properties */
+}
+
+
+/* style for questionText for long answers */
+.longAnswerQuestionText {
+    background-color: #6688c3;
+    border-top-left-radius: 0.1in; 
+      border-top-right-radius: 0.1in;
+}
+.contradictionContainer .questionText {
+    background-color: #ce4a4a;
+}
+
+
+}

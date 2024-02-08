@@ -106,7 +106,7 @@ const FAQ = () => {
           
           The grade for your written work is then calculated as follows: <br /><br />
           
-          (average of the grades for your essay questions) - (5 * # of unresolved contradictions) - (5 * # of unanswered multiple choice questions)
+           (10 * average of the grades for your essay questions) - (5 * # of unresolved contradictions) - (5 * # of unanswered multiple choice questions)
         </div>
       </div>
 
