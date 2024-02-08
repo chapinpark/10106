@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const puppeteer = require('puppeteer');
 
+// added buildpack for puppeteer to heroku
+ 
+
 // PDF generation endpoint
 router.post('/generate-pdf', async (req, res) => {
   const { username } = req.body;
