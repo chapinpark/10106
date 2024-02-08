@@ -13,7 +13,15 @@ router.post('/generate-pdf', async (req, res) => {
  
 
   try {
-    const browser = await puppeteer.launch({ headless: true }); // Consider headless for production
+    //const browser = await puppeteer.launch({ headless: true }); // Consider headless for production
+    const browser = await puppeteer.launch({
+  headless: 'new', // Consider "headless: 'new'" to opt into the new headless mode once you're ready
+  // Specify the executable path for Chrome using an environment variable
+  // provided by the Puppeteer buildpack, if available, or default to a known path.
+  executablePath: process.env.GOOGLE_CHROME_BIN || '/app/.apt/usr/bin/google-chrome',
+  args: ['--no-sandbox', '--disable-setuid-sandbox'], // Recommended args for running in Heroku
+});
+
     const page = await browser.newPage();
 
      // Here's where you add the event listener for console messages
