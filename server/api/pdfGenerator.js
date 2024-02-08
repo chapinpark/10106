@@ -18,12 +18,18 @@ router.post('/generate-pdf', async (req, res) => {
     console.log(`PAGE LOG: ${msg.text()}`);
   });
 
- 
+  // Use the environment variable to set the URL
+  const reactAppUrl = process.env.REACT_APP_URL || 'http://localhost:3000';
+  await page.goto(`${reactAppUrl}/showAllAnswers/${username}`, {
+    waitUntil: 'networkidle0', // Wait for the page to load completely
+  });
+    
+    
     // Use the base URL from the environment variable
-    const url = `http://localhost:3000/showAllAnswers/${username}`;
-    await page.goto(url, { waitUntil: 'networkidle0' }); // Ensure this comes before waitForSelector
+   // const url = `http://localhost:3000/showAllAnswers/${username}`;
+   // await page.goto(url, { waitUntil: 'networkidle0' }); // Ensure this comes before waitForSelector
 
-
+    
     // Generate screenshot for debugging
      // await page.screenshot({ path: 'screenshot.png', fullPage: true });
       
