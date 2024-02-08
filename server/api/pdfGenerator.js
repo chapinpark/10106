@@ -18,7 +18,8 @@ router.post('/generate-pdf', async (req, res) => {
   headless: 'new', // Consider "headless: 'new'" to opt into the new headless mode once you're ready
   // Specify the executable path for Chrome using an environment variable
   // provided by the Puppeteer buildpack, if available, or default to a known path.
-  executablePath: process.env.GOOGLE_CHROME_BIN || '/app/.apt/usr/bin/google-chrome',
+    executablePath: process.env.GOOGLE_CHROME_BIN || undefined, // Fallback to Puppeteer's default Chromium path in development
+
   args: ['--no-sandbox', '--disable-setuid-sandbox'], // Recommended args for running in Heroku
 });
 
